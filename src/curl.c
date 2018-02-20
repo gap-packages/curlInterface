@@ -105,8 +105,7 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL)
 
         // Check for errors
         if (res != CURLE_OK) {
-            size_t len = strlen(errbuf);
-            if (len)
+            if (*errbuf)
                 errorstring = MakeImmString(errbuf);
             else
                 errorstring = MakeImmString(curl_easy_strerror(res));
@@ -118,20 +117,17 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL)
 
     curl_global_cleanup();
 
+    Obj plist = NEW_PLIST(T_PLIST, 2);
+    SET_LEN_PLIST(plist, 2);
     if (errorstring) {
-        Obj plist = NEW_PLIST(T_PLIST, 2);
-        SET_LEN_PLIST(plist, 2);
         SET_ELM_PLIST(plist, 1, False);
         SET_ELM_PLIST(plist, 2, errorstring);
-        return plist;
     }
     else {
-        Obj plist = NEW_PLIST(T_PLIST, 2);
-        SET_LEN_PLIST(plist, 2);
         SET_ELM_PLIST(plist, 1, True);
         SET_ELM_PLIST(plist, 2, string);
-        return plist;
     }
+    return plist;
 }
 
 // Table of functions to export
