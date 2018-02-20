@@ -118,18 +118,6 @@ if( !IS_STRING_REP(URL) ) {
   }
 }
 
-Obj TestCommand(Obj self)
-{
-    return INTOBJ_INT(42);
-}
-
-Obj TestCommandWithParams(Obj self, Obj param, Obj param2)
-{
-    /* simply return the first parameter */
-    return param;
-}
-
-
 typedef Obj (* GVarFunc)(/*arguments*/);
 
 #define GVAR_FUNC_TABLE_ENTRY(srcfile, name, nparam, params) \
@@ -140,8 +128,6 @@ typedef Obj (* GVarFunc)(/*arguments*/);
 
 // Table of functions to export
 static StructGVarFunc GVarFuncs [] = {
-    GVAR_FUNC_TABLE_ENTRY("curl.c", TestCommand, 0, ""),
-    GVAR_FUNC_TABLE_ENTRY("curl.c", TestCommandWithParams, 2, "param, param2"),
     GVAR_FUNC_TABLE_ENTRY("curl.c", CURL_HTTPS_VERIFICATION,1, "bool"),
     GVAR_FUNC_TABLE_ENTRY("curl.c", CURL_READ_URL,1, "url"),
 
