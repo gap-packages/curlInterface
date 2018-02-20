@@ -18,25 +18,7 @@ size_t write_string(void * ptr, size_t size, size_t nmemb, Obj buf)
     return size * nmemb;
 }
 
-static Int GAPCURL_DoVerification = 1;
-
-Obj FuncCURL_HTTPS_VERIFICATION(Obj self, Obj Verification)
-{
-    if (Verification == True) {
-        GAPCURL_DoVerification = 1;
-    }
-    else if (Verification == False) {
-        GAPCURL_DoVerification = 0;
-    }
-    else {
-        ErrorMayQuit(
-            "HTTPSVerification : <Verification> must be True or False", 0L,
-            0L);
-    }
-    return 0;
-}
-
-Obj FuncCURL_READ_URL(Obj self, Obj URL)
+Obj FuncCURL_READ_URL(Obj self, Obj URL, Obj verifyCert)
 {
     CURL *   curl;
     CURLcode res;
@@ -44,6 +26,10 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL)
     Obj      errorstring = 0;
     UInt     len;
     char     arraybuf[4096] = { 0 };
+
+    if (verifyCert != True && verifyCert != False) {
+        ErrorMayQuit("ReadURL: <verifyCert> must be true or false", 0L, 0L);
+    }
 
     if (!IS_STRING(URL)) {
         ErrorMayQuit("ReadURL: <URL> must be a string", 0L, 0L);
@@ -77,7 +63,7 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL)
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_string);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, string);
 
-        if (GAPCURL_DoVerification) {
+        if (verifyCert == True) {
             //
             // If you want to connect to a site who isn't using a certificate
             // that is signed by one of the certs in the CA bundle you have,
@@ -132,8 +118,7 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL)
 
 // Table of functions to export
 static StructGVarFunc GVarFuncs[] = {
-    GVAR_FUNC(CURL_HTTPS_VERIFICATION, 1, "bool"),
-    GVAR_FUNC(CURL_READ_URL, 1, "url"),
+    GVAR_FUNC(CURL_READ_URL, 2, "url, verifyCert"),
     { 0 }
 };
 
