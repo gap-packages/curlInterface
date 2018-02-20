@@ -1,8 +1,8 @@
-/*
- * curlInterface: Simple Web Access
- */
+//
+// curlInterface: Simple Web Access
+//
 
-#include "src/compiled.h" /* GAP headers */
+#include "src/compiled.h" // GAP headers
 
 
 #include <stdio.h>
@@ -68,30 +68,32 @@ Obj CURL_READ_URL(Obj self, Obj URL)
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, string);
 
         if (GAPCURL_DoVerification) {
-            /*
-             * If you want to connect to a site who isn't using a certificate
-             * that is signed by one of the certs in the CA bundle you have,
-             * you can skip the verification of the server's certificate. This
-             * makes the connection A LOT LESS SECURE.
-             *
-             * If you have a CA cert for the server stored someplace else than
-             * in the default bundle, then the CURLOPT_CAPATH option might
-             * come handy for you.
-             */
+            //
+            // If you want to connect to a site who isn't using a certificate
+            // that is signed by one of the certs in the CA bundle you have,
+            // you can skip the verification of the server's certificate. This
+            // makes the connection A LOT LESS SECURE.
+            //
+            // If you have a CA cert for the server stored someplace else than
+            // in the default bundle, then the CURLOPT_CAPATH option might
+            // come handy for you.
+            //
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
-            /*
-             * If the site you're connecting to uses a different host name
-             * that what they have mentioned in their server certificate's
-             * commonName (or subjectAltName) fields, libcurl will refuse to
-             * connect. You can skip this check, but this will make the
-             * connection less secure.
-             */
+
+            //
+            // If the site you're connecting to uses a different host name
+            // that what they have mentioned in their server certificate's
+            // commonName (or subjectAltName) fields, libcurl will refuse to
+            // connect. You can skip this check, but this will make the
+            // connection less secure.
+            //
             curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
         }
 
-        /* Perform the request, res will get the return code */
+        // Perform the request, res will get the return code
         res = curl_easy_perform(curl);
-        /* Check for errors */
+
+        // Check for errors
         if (res != CURLE_OK) {
             size_t len = strlen(errbuf);
             if (len)
@@ -99,7 +101,8 @@ Obj CURL_READ_URL(Obj self, Obj URL)
             else
                 errorstring = MakeImmString(curl_easy_strerror(res));
         }
-        /* always cleanup */
+
+        // always cleanup
         curl_easy_cleanup(curl);
     }
 
@@ -133,37 +136,27 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC_TABLE_ENTRY("curl.c", CURL_HTTPS_VERIFICATION, 1, "bool"),
     GVAR_FUNC_TABLE_ENTRY("curl.c", CURL_READ_URL, 1, "url"),
 
-    { 0 } /* Finish with an empty entry */
+    { 0 }
 
 };
 
-/******************************************************************************
- *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
- */
+// initialise kernel data structures
 static Int InitKernel(StructInitInfo * module)
 {
-    /* init filters and functions                                          */
     InitHdlrFuncsFromTable(GVarFuncs);
 
-    /* return success                                                      */
     return 0;
 }
 
-/******************************************************************************
- *F  InitLibrary( <module> ) . . . . . . .  initialise library data structures
- */
+// initialise library data structures
 static Int InitLibrary(StructInitInfo * module)
 {
-    /* init filters and functions */
     InitGVarFuncsFromTable(GVarFuncs);
 
-    /* return success                                                      */
     return 0;
 }
 
-/******************************************************************************
- *F  InitInfopl()  . . . . . . . . . . . . . . . . . table of init functions
- */
+// table of init functions
 static StructInitInfo module = {
     .type = MODULE_DYNAMIC,
     .name = "curl",
