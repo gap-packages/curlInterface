@@ -62,8 +62,11 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL)
     }
     memcpy(arraybuf, CHARS_STRING(URL), len);
 
-    curl_global_init(CURL_GLOBAL_DEFAULT);
-
+    res = curl_global_init(CURL_GLOBAL_DEFAULT);
+    if (res != 0) {
+        ErrorMayQuit("ReadURL: failed to initialize libcurl (error %d)",
+                     (Int)res, 0L);
+    }
 
     curl = curl_easy_init();
     if (curl) {
