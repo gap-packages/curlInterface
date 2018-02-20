@@ -9,7 +9,7 @@ dnl ##
 dnl ## Setup autoconf
 dnl ##
 AC_PREREQ([2.68])
-AC_INIT([curl], m4_esyscmd([tr -d '\n' < VERSION]))
+AC_INIT([curlInterface], [GAP package])
 AC_CONFIG_SRCDIR([src/curl.c])
 AC_CONFIG_HEADER([src/pkgconfig.h:cnf/pkgconfig.h.in])
 AC_CONFIG_MACRO_DIR([m4])
@@ -90,11 +90,6 @@ LIBCURL_CHECK_CONFIG([yes],[],[],[AC_MSG_ERROR([libcurl development files requir
         fi
 	fi
     fi
-
-dnl ##
-dnl ## Rebuild configure if VERSION file changes
-dnl ##
-AC_SUBST([CONFIG_STATUS_DEPENDENCIES], ['$(top_srcdir)/VERSION'])
 
 dnl ##
 dnl ## Output everything
