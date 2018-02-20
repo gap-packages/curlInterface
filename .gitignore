@@ -19,6 +19,10 @@
 /doc/*.toc
 /doc/manual.pdf
 
+/doc/curlInterface.xml
+/doc/title.xml
+/doc/_*.xml
+
 .deps/
 .dirstamp
 .libs/
