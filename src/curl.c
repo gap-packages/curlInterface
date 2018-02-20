@@ -42,6 +42,7 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL)
     CURLcode res;
     Obj      string = MakeString("");
     Obj      errorstring = 0;
+    UInt     len;
     char     arraybuf[4096] = { 0 };
 
     if (!IS_STRING(URL)) {
@@ -52,8 +53,14 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL)
         URL = CopyToStringRep(URL);
     }
 
-    // TODO: Overflow
-    memcpy(arraybuf, CHARS_STRING(URL), GET_LEN_STRING(URL));
+    // copy URL into a buffer, as the GAP string could be moved
+    // by a garbage collection triggered by write_string
+    len = GET_LEN_STRING(URL) + 1;
+    if (len > sizeof(arraybuf)) {
+        ErrorMayQuit("ReadURL: <URL> must be less than %d chars",
+                     sizeof(arraybuf), 0L);
+    }
+    memcpy(arraybuf, CHARS_STRING(URL), len);
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
 
