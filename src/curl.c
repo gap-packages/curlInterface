@@ -20,7 +20,7 @@ size_t write_string(void * ptr, size_t size, size_t nmemb, Obj buf)
 
 static Int GAPCURL_DoVerification = 1;
 
-Obj CURL_HTTPS_VERIFICATION(Obj self, Obj Verification)
+Obj FuncCURL_HTTPS_VERIFICATION(Obj self, Obj Verification)
 {
     if (Verification == True) {
         GAPCURL_DoVerification = 1;
@@ -36,7 +36,7 @@ Obj CURL_HTTPS_VERIFICATION(Obj self, Obj Verification)
     return 0;
 }
 
-Obj CURL_READ_URL(Obj self, Obj URL)
+Obj FuncCURL_READ_URL(Obj self, Obj URL)
 {
     CURL *   curl;
     CURLcode res;
@@ -124,20 +124,11 @@ Obj CURL_READ_URL(Obj self, Obj URL)
     }
 }
 
-typedef Obj (*GVarFunc)(/*arguments*/);
-
-#define GVAR_FUNC_TABLE_ENTRY(srcfile, name, nparam, params)                 \
-    {                                                                        \
-        #name, nparam, params, (GVarFunc)name, srcfile ":Func" #name         \
-    }
-
 // Table of functions to export
 static StructGVarFunc GVarFuncs[] = {
-    GVAR_FUNC_TABLE_ENTRY("curl.c", CURL_HTTPS_VERIFICATION, 1, "bool"),
-    GVAR_FUNC_TABLE_ENTRY("curl.c", CURL_READ_URL, 1, "url"),
-
+    GVAR_FUNC(CURL_HTTPS_VERIFICATION, 1, "bool"),
+    GVAR_FUNC(CURL_READ_URL, 1, "url"),
     { 0 }
-
 };
 
 // initialise kernel data structures
