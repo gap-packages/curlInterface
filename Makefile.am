@@ -12,8 +12,9 @@ GAPINSTALLLIB = $(BINARCHDIR)/curl.so
 lib_LTLIBRARIES = curl.la
 
 curl_la_SOURCES = src/curl.c
-curl_la_CPPFLAGS = $(GAP_CPPFLAGS) -DCONFIG_H
-curl_la_LDFLAGS = -module -avoid-version
+curl_la_CPPFLAGS = $(GAP_CPPFLAGS)
+curl_la_CFLAGS = $(GAP_CFLAGS)
+curl_la_LDFLAGS = $(GAP_LDFLAGS) -module -avoid-version
 if SYS_IS_CYGWIN
 curl_la_LDFLAGS += -no-undefined -version-info 0:0:0 
 curl_la_LDFLAGS += -Wl,$(GAPROOT)/bin/$(GAPARCH)/gap.dll
