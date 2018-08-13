@@ -41,6 +41,14 @@ Obj CURL_URL(Obj URL, Obj verifyCert, request_type type, Obj post_string)
         URL = CopyToStringRep(URL);
     }
 
+    if (type == CURL_POST && !IS_STRING(post_string)) {
+        ErrorMayQuit("CURL_URL: <post_string> must be a string", 0L, 0L);
+    }
+
+    if (type == CURL_POST && !IS_STRING_REP(post_string)) {
+        post_string = CopyToStringRep(post_string);
+    }
+
     // copy URL into a buffer, as the GAP string could be moved
     // by a garbage collection triggered by write_string
     len = GET_LEN_STRING(URL) + 1;
@@ -64,6 +72,12 @@ Obj CURL_URL(Obj URL, Obj verifyCert, request_type type, Obj post_string)
         curl_easy_setopt(curl, CURLOPT_URL, arraybuf);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_string);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, string);
+        curl_easy_setopt(curl, CURLOPT_TCP_NODELAY, 1L);
+
+        if (type == CURL_POST) {
+            curl_easy_setopt(curl, CURLOPT_POST, 1L);
+            curl_easy_setopt(curl, CURLOPT_COPYPOSTFIELDS, CHARS_STRING(post_string));
+        }
 
         if (verifyCert == True) {
             //
@@ -124,9 +138,15 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL, Obj verifyCert)
     return CURL_URL(URL, verifyCert, CURL_GET, NULL);
 }
 
+Obj FuncCURL_POST_URL(Obj self, Obj URL, Obj post_string, Obj verifyCert)
+{
+    return CURL_URL(URL, verifyCert, CURL_POST, post_string);
+}
+
 // Table of functions to export
 static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC(CURL_READ_URL, 2, "url, verifyCert"),
+    GVAR_FUNC(CURL_POST_URL, 3, "url, verifyCert, post_string"),
     { 0 }
 };
 

@@ -3,8 +3,10 @@
 #
 #! @Chapter Overview
 #! 
-#! CurlInterface allows http and https URLs to be downloaded from
-#! the internet, using the 'curl' library.
+#! CurlInterface allows a user to interact with http and https 
+#! servers on the internet, using the `curl' library.
+#! Pages can be downloaded from a URL, and http POST requests
+#! can be sent to the URL for processing.
 
 #! @Section Installing curlInterface
 #!
@@ -39,7 +41,7 @@
 
 #! @Section Functions
 #!
-#! curlInterface currently provides a single function:
+#! curlInterface currently provides two simple functions:
 
 #! @Arguments URL[, verifyCert]
 #! @Description
@@ -56,3 +58,23 @@
 #!  in the component 'result'. If 'success' is <K>false</K>, then
 #!  'error' will contain a human-readable error string.
 DeclareGlobalFunction( "DownloadURL" );
+
+#! @Arguments URL, str[, verifyCert]
+#! @Description
+#!  Send an HTTP POST request to a URL on the internet. The argument
+#!  <A>URL</A> should be a string describing an address, and should
+#!  start with either http:// or https://
+#!  The argument <A>str</A> should be a string which will be sent to
+#!  the server as a POST request.
+#!  Setting the optional argument <A>verifyCert</A> to <K>false</K>
+#!  disables verification of HTTPS certificates.
+#!  <A>verifyCert</A> defaults to <K>true</K>.
+#!
+#! @Returns A record describing the result. This record will always
+#!  contain the component 'success', which is a boolean describing
+#!  whether the download was successful.
+#!  If 'success' is <K>true</K>, then the response sent by the 
+#!  server is stored in the component 'result'.
+#!  If 'success' is <K>false</K>, then 'error' will contain a
+#!  human-readable error string.
+DeclareGlobalFunction( "PostURL" );
