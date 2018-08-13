@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <curl/curl.h>
 
+typedef enum {CURL_GET, CURL_POST} request_type;
+
 size_t write_string(void * ptr, size_t size, size_t nmemb, Obj buf)
 {
     UInt len = GET_LEN_STRING(buf);
@@ -18,7 +20,7 @@ size_t write_string(void * ptr, size_t size, size_t nmemb, Obj buf)
     return size * nmemb;
 }
 
-Obj FuncCURL_READ_URL(Obj self, Obj URL, Obj verifyCert)
+Obj CURL_URL(Obj URL, Obj verifyCert, request_type type, Obj post_string)
 {
     CURL *   curl;
     CURLcode res;
@@ -28,11 +30,11 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL, Obj verifyCert)
     char     arraybuf[4096] = { 0 };
 
     if (verifyCert != True && verifyCert != False) {
-        ErrorMayQuit("ReadURL: <verifyCert> must be true or false", 0L, 0L);
+        ErrorMayQuit("CURL_URL: <verifyCert> must be true or false", 0L, 0L);
     }
 
     if (!IS_STRING(URL)) {
-        ErrorMayQuit("ReadURL: <URL> must be a string", 0L, 0L);
+        ErrorMayQuit("CURL_URL: <URL> must be a string", 0L, 0L);
     }
 
     if (!IS_STRING_REP(URL)) {
@@ -43,14 +45,14 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL, Obj verifyCert)
     // by a garbage collection triggered by write_string
     len = GET_LEN_STRING(URL) + 1;
     if (len > sizeof(arraybuf)) {
-        ErrorMayQuit("ReadURL: <URL> must be less than %d chars",
+        ErrorMayQuit("CURL_URL: <URL> must be less than %d chars",
                      sizeof(arraybuf), 0L);
     }
     memcpy(arraybuf, CHARS_STRING(URL), len);
 
     res = curl_global_init(CURL_GLOBAL_DEFAULT);
     if (res != 0) {
-        ErrorMayQuit("ReadURL: failed to initialize libcurl (error %d)",
+        ErrorMayQuit("CURL_URL: failed to initialize libcurl (error %d)",
                      (Int)res, 0L);
     }
 
@@ -114,6 +116,12 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL, Obj verifyCert)
         SET_ELM_PLIST(plist, 2, string);
     }
     return plist;
+}
+
+// GAP-callable functions
+Obj FuncCURL_READ_URL(Obj self, Obj URL, Obj verifyCert)
+{
+    return CURL_URL(URL, verifyCert, CURL_GET, NULL);
 }
 
 // Table of functions to export
