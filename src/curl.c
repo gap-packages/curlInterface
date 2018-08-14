@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <curl/curl.h>
 
+enum request_type {CURL_GET, CURL_POST};
+
 size_t write_string(void * ptr, size_t size, size_t nmemb, Obj buf)
 {
     UInt len = GET_LEN_STRING(buf);
@@ -18,7 +20,17 @@ size_t write_string(void * ptr, size_t size, size_t nmemb, Obj buf)
     return size * nmemb;
 }
 
-Obj FuncCURL_READ_URL(Obj self, Obj URL, Obj verifyCert)
+size_t read_string(char * buffer, size_t size, size_t nitems, Obj instream)
+{
+    UInt len = GET_LEN_STRING(instream);
+    if (len > size * nitems) {
+        return CURL_READFUNC_ABORT; // only short messages for now
+    }
+    memcpy(buffer, CHARS_STRING(instream), len);
+    return len;
+}
+
+Obj CURL_URL(Obj URL, Obj verifyCert, enum request_type type, Obj post_string)
 {
     CURL *   curl;
     CURLcode res;
@@ -28,29 +40,37 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL, Obj verifyCert)
     char     arraybuf[4096] = { 0 };
 
     if (verifyCert != True && verifyCert != False) {
-        ErrorMayQuit("ReadURL: <verifyCert> must be true or false", 0L, 0L);
+        ErrorMayQuit("CURL_URL: <verifyCert> must be true or false", 0L, 0L);
     }
 
     if (!IS_STRING(URL)) {
-        ErrorMayQuit("ReadURL: <URL> must be a string", 0L, 0L);
+        ErrorMayQuit("CURL_URL: <URL> must be a string", 0L, 0L);
     }
 
     if (!IS_STRING_REP(URL)) {
         URL = CopyToStringRep(URL);
     }
 
+    if (type == CURL_POST && !IS_STRING(post_string)) {
+        ErrorMayQuit("CURL_URL: <post_string> must be a string", 0L, 0L);
+    }
+
+    if (type == CURL_POST && !IS_STRING_REP(post_string)) {
+        post_string = CopyToStringRep(post_string);
+    }
+
     // copy URL into a buffer, as the GAP string could be moved
     // by a garbage collection triggered by write_string
     len = GET_LEN_STRING(URL) + 1;
     if (len > sizeof(arraybuf)) {
-        ErrorMayQuit("ReadURL: <URL> must be less than %d chars",
+        ErrorMayQuit("CURL_URL: <URL> must be less than %d chars",
                      sizeof(arraybuf), 0L);
     }
     memcpy(arraybuf, CHARS_STRING(URL), len);
 
     res = curl_global_init(CURL_GLOBAL_DEFAULT);
     if (res != 0) {
-        ErrorMayQuit("ReadURL: failed to initialize libcurl (error %d)",
+        ErrorMayQuit("CURL_URL: failed to initialize libcurl (error %d)",
                      (Int)res, 0L);
     }
 
@@ -62,6 +82,13 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL, Obj verifyCert)
         curl_easy_setopt(curl, CURLOPT_URL, arraybuf);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_string);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, string);
+
+        if (type == CURL_POST) {
+            curl_easy_setopt(curl, CURLOPT_READFUNCTION, read_string);
+            curl_easy_setopt(curl, CURLOPT_READDATA, post_string);
+            curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE_LARGE, GET_LEN_STRING(post_string));
+            curl_easy_setopt(curl, CURLOPT_POST, 1L);
+        }
 
         if (verifyCert == True) {
             //
@@ -116,9 +143,21 @@ Obj FuncCURL_READ_URL(Obj self, Obj URL, Obj verifyCert)
     return plist;
 }
 
+// GAP-callable functions
+Obj FuncCURL_READ_URL(Obj self, Obj URL, Obj verifyCert)
+{
+    return CURL_URL(URL, verifyCert, CURL_GET, NULL);
+}
+
+Obj FuncCURL_POST_URL(Obj self, Obj URL, Obj post_string, Obj verifyCert)
+{
+    return CURL_URL(URL, verifyCert, CURL_POST, post_string);
+}
+
 // Table of functions to export
 static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC(CURL_READ_URL, 2, "url, verifyCert"),
+    GVAR_FUNC(CURL_POST_URL, 3, "url, verifyCert, post_string"),
     { 0 }
 };
 
