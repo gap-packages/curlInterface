@@ -13,6 +13,7 @@ addons:
   apt_packages:
     - libgmp-dev
     - libreadline-dev
+    - libcurl4-dev
 
 matrix:
   include:
@@ -33,7 +34,6 @@ matrix:
           - g++-multilib
 
 before_script:
-  - sudo apt-get -qq update
   - export GAPROOT="$HOME/gap"
   - scripts/build_gap.sh
 script:
