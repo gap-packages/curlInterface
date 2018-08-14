@@ -1,3 +1,4 @@
+sudo: required
 language: c
 env:
   global:
@@ -32,6 +33,7 @@ matrix:
           - g++-multilib
 
 before_script:
+  - sudo apt-get -qq update
   - export GAPROOT="$HOME/gap"
   - scripts/build_gap.sh
 script:
