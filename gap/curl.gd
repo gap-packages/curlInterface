@@ -77,4 +77,17 @@ DeclareGlobalFunction( "DownloadURL" );
 #!  server is stored in the component 'result'.
 #!  If 'success' is <K>false</K>, then 'error' will contain a
 #!  human-readable error string.
-DeclareGlobalFunction( "PostURL" );
+DeclareGlobalFunction( "PostToURL" );
+
+#! @Arguments URL, type, out_string, verifyCert)
+#! @Description
+#!   Send an HTTP request of type <A>type</A> to a URL on the internet.
+#!   <A>URL</A>, <A>type</A>, and <A>out_string</A> should all be strings:
+#!   <A>URL</A> is the URL of the server, <A>type</A> is the type of HTTP
+#!   request (e.g. "GET"), and <A>out_string</A> is the message, if any, to send
+#!   to the server (in requests such as GET this will be ignored).  Finally,
+#!   <A>verifyCert</A> should be a boolean describing whether HTTPS certificates
+#!   should be verified.  Currently only GET and POST requests are supported.
+#!   For convenience, GET requests can be called with <Func Name="DownloadURL"/>
+#!   and POST requests can be called with <Func Name="PostToURL"/>.
+DeclareGlobalFunction( "CurlRequest" );

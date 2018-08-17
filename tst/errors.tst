@@ -5,25 +5,29 @@
 # URL too long (Download)
 gap> badURL := ListWithIdenticalEntries(4096,' ');;
 gap> DownloadURL(badURL);
-Error, CURL_URL: <URL> must be less than 4096 chars
+Error, CURL_REQUEST: <URL> must be less than 4096 chars
 
 # URL too long (Post)
 gap> badURL := ListWithIdenticalEntries(4096,' ');;
-gap> PostURL(badURL, "hello");
-Error, CURL_URL: <URL> must be less than 4096 chars
+gap> PostToURL(badURL, "hello");
+Error, CURL_REQUEST: <URL> must be less than 4096 chars
 
 # URL not a string (Download)
 gap> DownloadURL(42);
-Error, CURL_URL: <URL> must be a string
+Error, CurlRequest: <URL> must be a string
 
 # URL not a string (Post)
-gap> PostURL(42, "hello");
-Error, CURL_URL: <URL> must be a string
+gap> PostToURL(42, "hello");
+Error, CurlRequest: <URL> must be a string
+
+# request type not a string
+gap> CurlRequest("www.google.com", 637, "hello", true);
+Error, CurlRequest: <type> must be a string
 
 # post_string not a string
-gap> PostURL("httpbin.org/post", 17);                     
-Error, CURL_URL: <post_string> must be a string
+gap> PostToURL("httpbin.org/post", 17);                     
+Error, CurlRequest: <out_string> must be a string
 
 # invalid verifyCert
 gap> DownloadURL("https://www.google.com", "maybe verify cert");
-Error, CURL_URL: <verifyCert> must be true or false
+Error, CurlRequest: <verifyCert> must be true or false
