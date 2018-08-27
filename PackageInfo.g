@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "curlInterface",
 Subtitle := "Simple Web Access",
-Version := "1.0.0",
-Date := "29/03/2018", # dd/mm/yyyy format
+Version := "2.0.0",
+Date := "27/08/2018", # dd/mm/yyyy format
 
 Persons := [
   rec(
@@ -21,6 +21,22 @@ Persons := [
     LastName := "Jefferson",
     WWWHome := "http://caj.host.cs.st-andrews.ac.uk/",
     Email := "caj21@st-andrews.ac.uk",
+    PostalAddress := Concatenation(
+               "School of Computer Science\n",
+               "University of St Andrews\n",
+               "Jack Cole Building, North Haugh\n",
+               "St Andrews, Fife, KY16 9SX\n",
+               "United Kingdom" ),
+    Place := "St Andrews",
+    Institution := "University of St Andrews",
+  ),
+  rec(
+    IsAuthor := true,
+    IsMaintainer := true,
+    FirstNames := "Michael",
+    LastName := "Torpey",
+    WWWHome := "http://www-groups.mcs.st-andrews.ac.uk/~mct25/",
+    Email := "mct25@st-andrews.ac.uk",
     PostalAddress := Concatenation(
                "School of Computer Science\n",
                "University of St Andrews\n",

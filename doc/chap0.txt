@@ -6,19 +6,31 @@
                               [1X Simple Web Access [101X
   
   
-                                     1.0.0
+                                     2.0.0
   
   
-                                 29 March 2018
+                                 27 August 2018
   
   
                              Christopher Jefferson
+  
+                                 Michael Torpey
   
   
   
   Christopher Jefferson
       Email:    [7Xmailto:caj21@st-andrews.ac.uk[107X
       Homepage: [7Xhttp://caj.host.cs.st-andrews.ac.uk/[107X
+      Address:  [33X[0;14YSchool of Computer Science[133X
+                [33X[0;14YUniversity of St Andrews[133X
+                [33X[0;14YJack Cole Building, North Haugh[133X
+                [33X[0;14YSt Andrews, Fife, KY16 9SX[133X
+                [33X[0;14YUnited Kingdom[133X
+  
+  
+  Michael Torpey
+      Email:    [7Xmailto:mct25@st-andrews.ac.uk[107X
+      Homepage: [7Xhttp://www-groups.mcs.st-andrews.ac.uk/~mct25/[107X
       Address:  [33X[0;14YSchool of Computer Science[133X
                 [33X[0;14YUniversity of St Andrews[133X
                 [33X[0;14YJack Cole Building, North Haugh[133X
@@ -33,8 +45,15 @@
   [1XContents (curl)[101X
   
   1 [33X[0;0YOverview[133X
-    1.1 [33X[0;0YFunctions[133X
-      1.1-1 DownloadURL
+    1.1 [33X[0;0YInstalling curlInterface[133X
+      1.1-1 [33X[0;0YLinux[133X
+      1.1-2 [33X[0;0YCygwin[133X
+      1.1-3 [33X[0;0YMac OS X[133X
+    1.2 [33X[0;0YFunctions[133X
+      1.2-1 DownloadURL
+      1.2-2 PostToURL
+      1.2-3 DeleteURL
+      1.2-4 CurlRequest
   
   
   [32X
