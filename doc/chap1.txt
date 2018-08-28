@@ -28,9 +28,9 @@
   
   [1X1.1-3 [33X[0;0YMac OS X[133X[101X
   
-  [33X[0;0Ycurl is installed by default on Macs.[133X
+  [33X[0;0Ycurl is installed by default on Macs, but libcurl may be required.[133X
   
-  [30X    [33X[0;6YHomebrew: [10Xbrew install TODO-I-DON'T-KNOW[110X[133X
+  [30X    [33X[0;6YHomebrew: [10Xbrew install curl[110X[133X
   
   [30X    [33X[0;6YFink: [10Xfink install libcurl4[110X[133X
   
