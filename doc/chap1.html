@@ -145,7 +145,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := DeleteURL("www.google.com");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r.success;</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r.result{[1471..1540]};           </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r.result{[1471..1540]};</span>
 "&lt;p&gt;The request method &lt;code&gt;DELETE&lt;/code&gt; is inappropriate for the URL"
 </pre></div>
 
@@ -202,7 +202,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := CurlRequest("https://www.google.com",</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    "HEAD",</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    "",</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                    rec(verifyCert := false)); </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                    rec(verifyCert := false));</span>
 rec( result := "", success := true )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := CurlRequest("www.httpbin.org/post", "POST", "animal=tiger");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r.success;</span>

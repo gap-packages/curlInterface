@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "curlInterface",
 Subtitle := "Simple Web Access",
-Version := "2.0.1",
-Date := "28/08/2018", # dd/mm/yyyy format
+Version := "2.0.2",
+Date := "30/08/2018", # dd/mm/yyyy format
 
 Persons := [
   rec(
@@ -71,7 +71,7 @@ ArchiveFormats := ".tar.gz",
 ##    "dev"           for development versions of packages
 ##    "other"         for all other packages
 ##
-Status := "dev",
+Status := "deposited",
 
 AbstractHTML   :=  "",
 

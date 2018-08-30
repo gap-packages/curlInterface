@@ -94,7 +94,7 @@
     [4X[25Xgap>[125X [27Xr := DeleteURL("www.google.com");;[127X[104X
     [4X[25Xgap>[125X [27Xr.success;[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xr.result{[1471..1540]};           [127X[104X
+    [4X[25Xgap>[125X [27Xr.result{[1471..1540]};[127X[104X
     [4X[28X"<p>The request method <code>DELETE</code> is inappropriate for the URL"[128X[104X
   [4X[32X[104X
   
@@ -145,7 +145,7 @@
     [4X[25Xgap>[125X [27Xr := CurlRequest("https://www.google.com",[127X[104X
     [4X[25X>[125X [27X                    "HEAD",[127X[104X
     [4X[25X>[125X [27X                    "",[127X[104X
-    [4X[25X>[125X [27X                    rec(verifyCert := false)); [127X[104X
+    [4X[25X>[125X [27X                    rec(verifyCert := false));[127X[104X
     [4X[28Xrec( result := "", success := true )[128X[104X
     [4X[25Xgap>[125X [27Xr := CurlRequest("www.httpbin.org/post", "POST", "animal=tiger");;[127X[104X
     [4X[25Xgap>[125X [27Xr.success;[127X[104X
