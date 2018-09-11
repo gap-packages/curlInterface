@@ -92,13 +92,18 @@ Dependencies := rec(
 ),
 
 AvailabilityTest := function()
-        return true;
-    end,
+  local dir, str;
+  dir := DirectoriesPackagePrograms("curlInterface");
+  if Filename(dir, "curl.so") = fail then
+    str := "kernel extension not compiled, package cannot be loaded";
+    LogPackageLoadingMessage(PACKAGE_WARNING, str);
+    return fail;
+  fi;
+  return true;
+end,
 
 TestFile := "tst/testall.g",
 
 #Keywords := [ "TODO" ],
 
 ));
-
-
