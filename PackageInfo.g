@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "curlInterface",
 Subtitle := "Simple Web Access",
-Version := "2.0.2",
-Date := "30/08/2018", # dd/mm/yyyy format
+Version := "2.1.0",
+Date := "18/09/2018", # dd/mm/yyyy format
 
 Persons := [
   rec(
@@ -92,13 +92,18 @@ Dependencies := rec(
 ),
 
 AvailabilityTest := function()
-        return true;
-    end,
+  local dir, str;
+  dir := DirectoriesPackagePrograms("curlInterface");
+  if Filename(dir, "curl.so") = fail then
+    str := "kernel extension not compiled, package cannot be loaded";
+    LogPackageLoadingMessage(PACKAGE_WARNING, str);
+    return fail;
+  fi;
+  return true;
+end,
 
 TestFile := "tst/testall.g",
 
 #Keywords := [ "TODO" ],
 
 ));
-
-

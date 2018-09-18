@@ -117,7 +117,10 @@
         (default [9Xtrue[109X);[133X
   
   [30X    [33X[0;6Y[10Xverbose[110X:  a  boolean  describing whether to print extra information to
-        the screen (default [9Xfalse[109X).[133X
+        the screen (default [9Xfalse[109X);[133X
+  
+  [30X    [33X[0;6Y[10XfollowRedirect[110X:  a boolean describing whether to follow redirection to
+        another URL (default [9Xtrue[109X).[133X
   
   [33X[0;0YAs  output,  this function returns a record containing some of the following
   components, which describe the outcome of the request:[133X
