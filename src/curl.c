@@ -22,7 +22,8 @@ Obj FuncCURL_REQUEST(Obj self,
                      Obj type,
                      Obj out_string,
                      Obj verifyCert,
-                     Obj verbose)
+                     Obj verbose,
+                     Obj followRedirect)
 {
     CURL *     curl;
     CURLcode   res;
@@ -71,6 +72,9 @@ Obj FuncCURL_REQUEST(Obj self,
 
         if (verbose == True)
             curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+
+        if (followRedirect == True)
+            curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
 
         if (strcmp((const char *) CHARS_STRING(type), "GET") == 0) {
             // simply download from the URL
@@ -157,7 +161,8 @@ Obj FuncCURL_REQUEST(Obj self,
 
 // Table of functions to export
 static StructGVarFunc GVarFuncs[] = {
-    GVAR_FUNC(CURL_REQUEST, 5, "url, type, out_string, verifyCert, verbose"),
+    GVAR_FUNC(CURL_REQUEST, 6,
+              "url, type, out_string, verifyCert, verbose, followRedirect"),
     { 0 }
 };
 

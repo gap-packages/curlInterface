@@ -120,7 +120,9 @@ DeclareGlobalFunction("DeleteURL");
 #!     * <C>verifyCert</C>: a boolean describing whether to verify HTTPS
 #!       certificates (default <K>true</K>);
 #!     * <C>verbose</C>: a boolean describing whether to print extra information
-#!       to the screen (default <K>false</K>).
+#!       to the screen (default <K>false</K>);
+#!     * <C>followRedirect</C>: a boolean describing whether to follow
+#!       redirection to another URL (default <K>true</K>).
 #!
 #!   As output, this function returns a record containing some of the following
 #!   components, which describe the outcome of the request:

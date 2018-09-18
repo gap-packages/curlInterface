@@ -163,3 +163,17 @@ gap> PositionSublist(r.result, "httpbin") <> fail;
 true
 gap> PositionSublist(r.result, "404") <> fail;
 false
+
+# Follow redirects
+gap> url := "http://www.icm.tu-bs.de/ag_algebra/software/polycyclic";;
+gap> r := DownloadURL(url);;
+gap> PositionSublist(r.result, "GitHub Pages") <> fail;
+true
+gap> r := DownloadURL(url, rec(followRedirect := true));;
+gap> PositionSublist(r.result, "GitHub Pages") <> fail;
+true
+gap> r := DownloadURL(url, rec(followRedirect := false));;
+gap> PositionSublist(r.result, "GitHub Pages") <> fail;
+false
+gap> PositionSublist(r.result, "301") <> fail;
+true

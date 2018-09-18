@@ -36,6 +36,10 @@ Error, CurlRequest: <opts>.verifyCert must be true or false
 gap> DownloadURL("https://www.google.com", rec(verbose := "yes"));
 Error, CurlRequest: <opts>.verbose must be true or false
 
+# invalid followRedirect
+gap> DownloadURL("https://www.google.com", rec(followRedirect := "always"));
+Error, CurlRequest: <opts>.followRedirect must be true or false
+
 # invalid opts
 gap> DownloadURL("https://www.google.com", "please verify the cert");
 Error, CurlRequest: <opts> must be a record
