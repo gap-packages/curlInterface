@@ -28,13 +28,13 @@ function(URL, type, out_string, opts...)
         ErrorNoReturn("CurlRequest: <type> must be a string");
     elif not IsString(out_string) then
         ErrorNoReturn("CurlRequest: <out_string> must be a string");
-    elif r.verifyCert <> true and r.verifyCert <> false then
-        ErrorNoReturn("CurlRequest: <opts>.verifyCert must be true or false");
-    elif r.verbose <> true and r.verbose <> false then
-        ErrorNoReturn("CurlRequest: <opts>.verbose must be true or false");
-    elif r.followRedirect <> true and r.followRedirect <> false then
-        ErrorNoReturn("CurlRequest: <opts>.followRedirect must be true or false");
     fi;
+    for rnam in ["verifyCert", "verbose", "followRedirect"] do
+        if r.(rnam) <> true and r.(rnam) <> false then
+            ErrorNoReturn("CurlRequest: <opts>.", rnam,
+                          " must be true or false");
+        fi;
+    od;
 
     return CURL_REQUEST(URL, type, out_string,
                         r.verifyCert,
