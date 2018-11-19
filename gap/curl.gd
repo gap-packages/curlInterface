@@ -4,7 +4,7 @@
 #! @Chapter Overview
 #!
 #! CurlInterface allows a user to interact with http and https
-#! servers on the internet, using the `curl' library.
+#! servers on the internet, using the 'curl' library.
 #! Pages can be downloaded from a URL, and http POST requests
 #! can be sent to the URL for processing.
 
