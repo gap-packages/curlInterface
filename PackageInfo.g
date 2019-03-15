@@ -12,6 +12,7 @@ PackageName := "curlInterface",
 Subtitle := "Simple Web Access",
 Version := "2.1.1",
 Date := "26/10/2018", # dd/mm/yyyy format
+License := "GPL-2.0-or-later",
 
 Persons := [
   rec(
