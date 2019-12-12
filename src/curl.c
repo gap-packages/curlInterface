@@ -7,6 +7,17 @@
 #include <stdio.h>
 #include <curl/curl.h>
 
+#undef PACKAGE
+#undef PACKAGE_BUGREPORT
+#undef PACKAGE_NAME
+#undef PACKAGE_STRING
+#undef PACKAGE_TARNAME
+#undef PACKAGE_URL
+#undef PACKAGE_VERSION
+
+#include "pkgconfig.h"    // our own autoconf results
+
+
 size_t write_string(void * ptr, size_t size, size_t nmemb, Obj buf)
 {
     UInt len = GET_LEN_STRING(buf);
