@@ -5,6 +5,7 @@
 #include "src/compiled.h" // GAP headers
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <curl/curl.h>
 
 #undef PACKAGE
