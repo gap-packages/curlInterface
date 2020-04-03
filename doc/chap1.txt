@@ -2,7 +2,7 @@
   [1X1 [33X[0;0YOverview[133X[101X
   
   [33X[0;0YCurlInterface  allows  a user to interact with http and https servers on the
-  internet,  using the `curl' library. Pages can be downloaded from a URL, and
+  internet,  using the 'curl' library. Pages can be downloaded from a URL, and
   http POST requests can be sent to the URL for processing.[133X
   
   
