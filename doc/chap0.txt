@@ -6,7 +6,7 @@
                               [1X Simple Web Access [101X
   
   
-                                     2.2.0
+                                     2.2.1
   
   
                                   3 April 2020
