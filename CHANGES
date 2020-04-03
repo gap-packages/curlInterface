@@ -1,5 +1,11 @@
 This file describes changes in the curlInterface package.
 
+
+2.2.0 (2020-04-03)
+  - Update build system
+  - Minor code cleanups
+  - Remove VERSION file
+
 2.1.1 (2018-10-26)
   - Minor test change
   - Fix licensing information
