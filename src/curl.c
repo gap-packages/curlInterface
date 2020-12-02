@@ -81,6 +81,7 @@ Obj FuncCURL_REQUEST(Obj self,
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_string);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, in_string);
         curl_easy_setopt(curl, CURLOPT_TCP_NODELAY, 1L);
+        curl_easy_setopt(curl, CURLOPT_USERAGENT, "curlInterface/GAP package");
 
         if (verbose == True)
             curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
