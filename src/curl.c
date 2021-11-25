@@ -18,6 +18,9 @@
 
 #include "pkgconfig.h"    // our own autoconf results
 
+#if !defined(GAP_KERNEL_MAJOR_VERSION) || GAP_KERNEL_MAJOR_VERSION < 7
+#define CONST_CSTR_STRING(x) CSTR_STRING(x)
+#endif
 
 size_t write_string(void * ptr, size_t size, size_t nmemb, Obj buf)
 {
@@ -25,7 +28,7 @@ size_t write_string(void * ptr, size_t size, size_t nmemb, Obj buf)
     UInt newlen = len + size * nmemb;
     GROW_STRING(buf, newlen);
     SET_LEN_STRING(buf, newlen);
-    memcpy(CHARS_STRING(buf) + len, ptr, size * nmemb);
+    memcpy(CSTR_STRING(buf) + len, ptr, size * nmemb);
     return size * nmemb;
 }
 
@@ -64,7 +67,7 @@ Obj FuncCURL_REQUEST(Obj self,
         ErrorMayQuit("CURL_REQUEST: <URL> must be less than %d chars",
                      sizeof(urlbuf), 0L);
     }
-    memcpy(urlbuf, CHARS_STRING(URL), len);
+    memcpy(urlbuf, CONST_CSTR_STRING(URL), len);
 
     res = curl_global_init(CURL_GLOBAL_DEFAULT);
     if (res != 0) {
@@ -89,20 +92,20 @@ Obj FuncCURL_REQUEST(Obj self,
         if (followRedirect == True)
             curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
 
-        if (strcmp((const char *) CHARS_STRING(type), "GET") == 0) {
+        if (strcmp(CONST_CSTR_STRING(type), "GET") == 0) {
             // simply download from the URL
             curl_easy_setopt(curl, CURLOPT_HTTPGET, 1L);
         }
-        else if (strcmp((const char *) CHARS_STRING(type), "POST") == 0) {
+        else if (strcmp(CONST_CSTR_STRING(type), "POST") == 0) {
             // send a string to the URL
             len = GET_LEN_STRING(out_string); // no null character
             curl_easy_setopt(curl, CURLOPT_POST, 1L);
             curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE_LARGE, len);
             curl_easy_setopt(curl, CURLOPT_COPYPOSTFIELDS,
-                             CHARS_STRING(out_string));
+                             CONST_CSTR_STRING(out_string));
             // using COPYPOSTFIELDS copies the data right now
         }
-        else if (strcmp((const char *) CHARS_STRING(type), "HEAD") == 0) {
+        else if (strcmp(CONST_CSTR_STRING(type), "HEAD") == 0) {
             // only get headers, without body
             curl_easy_setopt(curl, CURLOPT_NOBODY, 1L);
         }
@@ -110,7 +113,7 @@ Obj FuncCURL_REQUEST(Obj self,
             // custom request e.g. DELETE
             len = GET_LEN_STRING(type) + 1; // include null character
             typebuf = (char *) malloc(len);
-            memcpy(typebuf, CHARS_STRING(type), len);
+            memcpy(typebuf, CONST_CSTR_STRING(type), len);
             curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, typebuf);
         }            
 
