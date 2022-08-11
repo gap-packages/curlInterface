@@ -146,14 +146,14 @@ false
 gap> r := DeleteURL("https://www.google.com");;
 gap> r.success;
 true
-gap> PositionSublist(r.result, "405") <> fail;
+gap> PositionSublist(r.result, "405 ") <> fail;
 true
 gap> PositionSublist(r.result, "tiger") <> fail;
 false
 gap> r := DeleteURL("www.httpbin.org/delete");;
 gap> r.success;
 true
-gap> PositionSublist(r.result, "405") <> fail;
+gap> PositionSublist(r.result, "405 ") <> fail;
 false
 
 # Check verbose requests don't break anything (we can't catch the output here)
@@ -162,7 +162,7 @@ gap> r.success;
 true
 gap> PositionSublist(r.result, "httpbin") <> fail;
 true
-gap> PositionSublist(r.result, "404") <> fail;
+gap> PositionSublist(r.result, "404 ") <> fail;
 false
 
 # Follow redirects
@@ -176,5 +176,5 @@ true
 gap> r := DownloadURL(url, rec(followRedirect := false));;
 gap> PositionSublist(r.result, "GitHub Pages") <> fail;
 false
-gap> PositionSublist(r.result, "301") <> fail;
+gap> PositionSublist(r.result, "301 ") <> fail;
 true
