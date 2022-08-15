@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "curlInterface",
 Subtitle := "Simple Web Access",
-Version := "2.2.2",
-Date := "22/02/2022", # dd/mm/yyyy format
+Version := "2.2.3",
+Date := "15/08/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -35,8 +35,8 @@ Persons := [
     IsAuthor := true,
     IsMaintainer := true,
     FirstNames := "Michael",
-    LastName := "Torpey",
-    WWWHome := "http://www-groups.mcs.st-andrews.ac.uk/~mct25/",
+    LastName := "Young",
+    WWWHome := "http://mct25.host.cs.st-andrews.ac.uk/",
     Email := "mct25@st-andrews.ac.uk",
     PostalAddress := Concatenation(
                "School of Computer Science\n",
@@ -79,7 +79,7 @@ AbstractHTML   :=  "",
 PackageDoc := rec(
   BookName  := "curl",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Simple Web Access",
