@@ -1,5 +1,10 @@
 This file describes changes in the curlInterface package.
 
+2.2.3 (2022-08-15)
+  - Make test suite more robust
+  - Tweak build system some more
+  - Various janitorial changes
+
 2.2.2 (2022-02-22)
   - Overhaul build system
   - Set user agent string
