@@ -30,7 +30,7 @@
 #!
 #! Install <C>libcurl-devel</C> from the cygwin package manager
 #!
-#! @Subsection Mac OS X
+#! @Subsection macOS
 #!
 #! curl is installed by default on Macs, but libcurl may be required.
 #! <List>
