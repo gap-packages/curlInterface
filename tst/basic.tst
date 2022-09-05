@@ -54,6 +54,19 @@ false
 gap> PositionSublist(r.error, "Could not resolve host") <> fail;
 true
 
+# Check another bad URL
+gap> r := DownloadURL("https://www.gap-system.org/Packages/curlInterface.x");;
+gap> r.success;
+true
+gap> PositionSublist(r.result, "URL was not found") <> fail;
+true
+gap> r := DownloadURL("https://www.gap-system.org/Packages/curlInterface.x",
+>           rec(failOnError:= true));;
+gap> r.success;
+false
+gap> PositionSublist(r.error, "404") <> fail;
+true
+
 # Check successful POST requests
 gap> r := PostToURL("httpbin.org/post", "field1=true&field2=17");;
 gap> SortedList(RecNames(r));

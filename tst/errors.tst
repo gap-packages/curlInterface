@@ -40,6 +40,10 @@ Error, CurlRequest: <opts>.verbose must be true or false
 gap> DownloadURL("https://www.google.com", rec(followRedirect := "always"));
 Error, CurlRequest: <opts>.followRedirect must be true or false
 
+# invalid failOnError
+gap> DownloadURL("https://www.google.com", rec(failOnError := "yes"));
+Error, CurlRequest: <opts>.failOnError must be true or false
+
 # invalid opts
 gap> DownloadURL("https://www.google.com", "please verify the cert");
 Error, CurlRequest: <opts> must be a record
@@ -47,3 +51,7 @@ Error, CurlRequest: <opts> must be a record
 # too many arguments
 gap> CurlRequest("www.google.com", "GET", "", rec(verifyCert := true), 3, true);
 Error, CurlRequest: usage: requires 3 or 4 arguments, but 6 were given
+
+# number of arguments
+gap> CURL_REQUEST();
+Error, Function: number of arguments must be 7 (not 0)

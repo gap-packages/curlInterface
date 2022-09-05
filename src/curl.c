@@ -32,13 +32,7 @@ size_t write_string(void * ptr, size_t size, size_t nmemb, Obj buf)
     return size * nmemb;
 }
 
-Obj FuncCURL_REQUEST(Obj self,
-                     Obj URL,
-                     Obj type,
-                     Obj out_string,
-                     Obj verifyCert,
-                     Obj verbose,
-                     Obj followRedirect)
+Obj FuncCURL_REQUEST(Obj self, Obj input_list)
 {
     CURL *     curl;
     CURLcode   res;
@@ -48,14 +42,20 @@ Obj FuncCURL_REQUEST(Obj self,
     char       urlbuf[4096] = { 0 };
     char *     typebuf = NULL;
 
+    const int n = LEN_PLIST(input_list);
+    GAP_ASSERT(n == 7);    // paranoia check, GAP enforces this
+
+    Obj URL = ELM_PLIST(input_list, 1);
     if (!IS_STRING_REP(URL)) {
         URL = CopyToStringRep(URL);
     }
 
+    Obj type = ELM_PLIST(input_list, 2);
     if (!IS_STRING_REP(type)) {
         type = CopyToStringRep(type);
     }
 
+    Obj out_string = ELM_PLIST(input_list, 3);
     if (!IS_STRING_REP(out_string)) {
         out_string = CopyToStringRep(out_string);
     }
@@ -86,11 +86,19 @@ Obj FuncCURL_REQUEST(Obj self,
         curl_easy_setopt(curl, CURLOPT_TCP_NODELAY, 1L);
         curl_easy_setopt(curl, CURLOPT_USERAGENT, "curlInterface/GAP package");
 
+        Obj verifyCert = ELM_PLIST(input_list, 4);
+        Obj verbose = ELM_PLIST(input_list, 5);
+        Obj followRedirect = ELM_PLIST(input_list, 6);
+        Obj failOnError = ELM_PLIST(input_list, 7);
+
         if (verbose == True)
             curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 
         if (followRedirect == True)
             curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+
+        if (failOnError == True)
+            curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1L);
 
         if (strcmp(CONST_CSTR_STRING(type), "GET") == 0) {
             // simply download from the URL
@@ -177,8 +185,8 @@ Obj FuncCURL_REQUEST(Obj self,
 
 // Table of functions to export
 static StructGVarFunc GVarFuncs[] = {
-    GVAR_FUNC(CURL_REQUEST, 6,
-              "url, type, out_string, verifyCert, verbose, followRedirect"),
+    GVAR_FUNC(CURL_REQUEST, 7,
+              "url, type, out_string, verifyCert, verbose, followRedirect, failOnError"),
     { 0 }
 };
 

@@ -8,7 +8,8 @@ function(URL, type, out_string, opts...)
     local r, rnam;
 
     # Get options
-    r := rec(verifyCert := true, verbose := false, followRedirect := true);
+    r := rec(verifyCert := true, verbose := false, followRedirect := true,
+             failOnError:= false);
     if Length(opts) = 1 then
         if not IsRecord(opts[1]) then
             ErrorNoReturn("CurlRequest: <opts> must be a record");
@@ -29,7 +30,7 @@ function(URL, type, out_string, opts...)
     elif not IsString(out_string) then
         ErrorNoReturn("CurlRequest: <out_string> must be a string");
     fi;
-    for rnam in ["verifyCert", "verbose", "followRedirect"] do
+    for rnam in ["verifyCert", "verbose", "followRedirect", "failOnError"] do
         if r.(rnam) <> true and r.(rnam) <> false then
             ErrorNoReturn("CurlRequest: <opts>.", rnam,
                           " must be true or false");
@@ -39,7 +40,8 @@ function(URL, type, out_string, opts...)
     return CURL_REQUEST(URL, type, out_string,
                         r.verifyCert,
                         r.verbose,
-                        r.followRedirect);
+                        r.followRedirect,
+                        r.failOnError);
 end);
 
 InstallGlobalFunction("DownloadURL",
