@@ -118,11 +118,22 @@ DeclareGlobalFunction("DeleteURL");
 #!   record specifying additional options for the request.  The following
 #!   options are supported:
 #!     * <C>verifyCert</C>: a boolean describing whether to verify HTTPS
-#!       certificates (default <K>true</K>);
+#!       certificates
+#!       (corresponds to the curl options <C>CURLOPT_SSL_VERIFYPEER</C>
+#!       and <C>CURLOPT_SSL_VERIFYHOST</C>,
+#!       the default is <K>true</K> for both);
 #!     * <C>verbose</C>: a boolean describing whether to print extra information
-#!       to the screen (default <K>false</K>);
+#!       to the screen
+#!       (corresponds to the curl option <C>CURLOPT_VERBOSE</C>,
+#!       the default is <K>false</K>);
 #!     * <C>followRedirect</C>: a boolean describing whether to follow
-#!       redirection to another URL (default <K>true</K>).
+#!       redirection to another URL
+#!       (corresponds to the curl option <C>CURLOPT_FOLLOWLOCATION</C>,
+#!       the default is <K>true</K>);
+#!     * <C>failOnError</C>: a boolean describing whether to regard
+#!       404 (and other 4xx) status codes as error
+#!       (corresponds to the curl option <C>CURLOPT_FAILONERROR</C>,
+#!       the default is <K>false</K>).
 #!
 #!   As output, this function returns a record containing some of the following
 #!   components, which describe the outcome of the request:
