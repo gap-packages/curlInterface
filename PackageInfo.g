@@ -121,6 +121,23 @@ AvailabilityTest := function()
   return true;
 end,
 
+# Show the libcurl version number in the banner string.
+# (We assume that this function gets called *after* the package has been
+# loaded, in particular after libcurl has been loaded.)
+BannerFunction := function( info )
+  local str, version;
+
+  str := DefaultPackageBannerString( info );
+  if not IsBoundGlobal( "CURL_VERSION" ) then
+    return str;
+  fi;
+  version := ValueGlobal( "CURL_VERSION" )();
+
+  return ReplacedString( str, "by Christopher",
+             Concatenation( "Using ", version, "\n", "by Christopher" ) );
+end,
+
+
 TestFile := "tst/testall.g",
 
 #Keywords := [ "TODO" ],
