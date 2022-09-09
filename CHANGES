@@ -1,8 +1,9 @@
 This file describes changes in the curlInterface package.
 
-X.Y.Z (YYYY-MM-DD)
+2.3.0 (2022-09-09)
   - Add option failOnError which treats 4xx status codes such as
     "404 page not found" as errors in CurlRequest, DownloadURL etc.
+  - Report libcurl version in the package banner for debugging
 
 2.2.3 (2022-08-15)
   - Make test suite more robust
