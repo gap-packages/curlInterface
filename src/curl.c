@@ -183,10 +183,16 @@ Obj FuncCURL_REQUEST(Obj self, Obj input_list)
     return prec;
 }
 
+Obj FuncCURL_VERSION(Obj self)
+{
+    return MakeImmString(curl_version());
+}
+
 // Table of functions to export
 static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC(CURL_REQUEST, 7,
               "url, type, out_string, verifyCert, verbose, followRedirect, failOnError"),
+    GVAR_FUNC(CURL_VERSION, 0, ""),
     { 0 }
 };
 
