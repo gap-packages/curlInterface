@@ -29,7 +29,7 @@
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7A3117FB8072361E">1.1-2 <span class="Heading">Cygwin</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X86D5D9BC839E166F">1.1-3 <span class="Heading">Mac OS X</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7FF92C7E7A41189D">1.1-3 <span class="Heading">macOS</span></a>
 </span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X86FA580F8055B274">1.2 <span class="Heading">Functions</span></a>
@@ -71,9 +71,9 @@
 
 <p>Install <code class="code">libcurl-devel</code> from the cygwin package manager</p>
 
-<p><a id="X86D5D9BC839E166F" name="X86D5D9BC839E166F"></a></p>
+<p><a id="X7FF92C7E7A41189D" name="X7FF92C7E7A41189D"></a></p>
 
-<h5>1.1-3 <span class="Heading">Mac OS X</span></h5>
+<h5>1.1-3 <span class="Heading">macOS</span></h5>
 
 <p>curl is installed by default on Macs, but libcurl may be required.</p>
 
@@ -162,13 +162,16 @@ true
 
 
 <ul>
-<li><p><code class="code">verifyCert</code>: a boolean describing whether to verify HTTPS certificates (default <code class="keyw">true</code>);</p>
+<li><p><code class="code">verifyCert</code>: a boolean describing whether to verify HTTPS certificates (corresponds to the curl options <code class="code">CURLOPT_SSL_VERIFYPEER</code> and <code class="code">CURLOPT_SSL_VERIFYHOST</code>, the default is <code class="keyw">true</code> for both);</p>
 
 </li>
-<li><p><code class="code">verbose</code>: a boolean describing whether to print extra information to the screen (default <code class="keyw">false</code>);</p>
+<li><p><code class="code">verbose</code>: a boolean describing whether to print extra information to the screen (corresponds to the curl option <code class="code">CURLOPT_VERBOSE</code>, the default is <code class="keyw">false</code>);</p>
 
 </li>
-<li><p><code class="code">followRedirect</code>: a boolean describing whether to follow redirection to another URL (default <code class="keyw">true</code>).</p>
+<li><p><code class="code">followRedirect</code>: a boolean describing whether to follow redirection to another URL (corresponds to the curl option <code class="code">CURLOPT_FOLLOWLOCATION</code>, the default is <code class="keyw">true</code>);</p>
+
+</li>
+<li><p><code class="code">failOnError</code>: a boolean describing whether to regard 404 (and other 4xx) status codes as error (corresponds to the curl option <code class="code">CURLOPT_FAILONERROR</code>, the default is <code class="keyw">false</code>).</p>
 
 </li>
 </ul>

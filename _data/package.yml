@@ -1,6 +1,6 @@
 name: curlInterface
-version: 2.2.3
-date: 2022-08-15
+version: 2.3.0
+date: 2022-09-09
 description: |
     Simple Web Access
 
@@ -13,6 +13,8 @@ authors:
 maintainers:
     - name: Christopher Jefferson
       url: http://caj.host.cs.st-andrews.ac.uk/
+    - name: Max Horn
+      url: https://www.quendi.de/math
     - name: Michael Young
       url: http://mct25.host.cs.st-andrews.ac.uk/
 
@@ -29,7 +31,7 @@ packageinfo: https://gap-packages.github.io/curlInterface/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/curlInterface/releases/download/v2.2.3/curlInterface-2.2.3.tar.gz
+      url: https://github.com/gap-packages/curlInterface/releases/download/v2.3.0/curlInterface-2.3.0.tar.gz
 
 abstract: |
 

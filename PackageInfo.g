@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "curlInterface",
 Subtitle := "Simple Web Access",
-Version := "2.2.3",
-Date := "15/08/2022", # dd/mm/yyyy format
+Version := "2.3.0",
+Date := "09/09/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -31,6 +31,24 @@ Persons := [
     Place := "St Andrews",
     Institution := "University of St Andrews",
   ),
+
+  rec(
+    IsAuthor := false,
+    IsMaintainer := true,
+    FirstNames := "Max",
+    LastName := "Horn",
+    WWWHome := "https://www.quendi.de/math",
+    Email := "horn@mathematik.uni-kl.de",
+    PostalAddress := Concatenation(
+               "Fachbereich Mathematik\n",
+               "TU Kaiserslautern\n",
+               "Gottlieb-Daimler-Straße 48\n",
+               "67663 Kaiserslautern\n",
+               "Germany" ),
+    Place := "Kaiserslautern, Germany",
+    Institution := "TU Kaiserslautern"
+  ),
+
   rec(
     IsAuthor := true,
     IsMaintainer := true,
@@ -102,6 +120,23 @@ AvailabilityTest := function()
   fi;
   return true;
 end,
+
+# Show the libcurl version number in the banner string.
+# (We assume that this function gets called *after* the package has been
+# loaded, in particular after libcurl has been loaded.)
+BannerFunction := function( info )
+  local str, version;
+
+  str := DefaultPackageBannerString( info );
+  if not IsBoundGlobal( "CURL_VERSION" ) then
+    return str;
+  fi;
+  version := ValueGlobal( "CURL_VERSION" )();
+
+  return ReplacedString( str, "by Christopher",
+             Concatenation( "Using ", version, "\n", "by Christopher" ) );
+end,
+
 
 TestFile := "tst/testall.g",
 

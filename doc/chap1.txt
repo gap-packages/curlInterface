@@ -26,7 +26,7 @@
   [33X[0;0YInstall [10Xlibcurl-devel[110X from the cygwin package manager[133X
   
   
-  [1X1.1-3 [33X[0;0YMac OS X[133X[101X
+  [1X1.1-3 [33X[0;0YmacOS[133X[101X
   
   [33X[0;0Ycurl is installed by default on Macs, but libcurl may be required.[133X
   
@@ -114,13 +114,20 @@
   supported:[133X
   
   [30X    [33X[0;6Y[10XverifyCert[110X:  a boolean describing whether to verify HTTPS certificates
-        (default [9Xtrue[109X);[133X
+        (corresponds   to   the   curl   options   [10XCURLOPT_SSL_VERIFYPEER[110X  and
+        [10XCURLOPT_SSL_VERIFYHOST[110X, the default is [9Xtrue[109X for both);[133X
   
   [30X    [33X[0;6Y[10Xverbose[110X:  a  boolean  describing whether to print extra information to
-        the screen (default [9Xfalse[109X);[133X
+        the  screen  (corresponds  to  the  curl  option  [10XCURLOPT_VERBOSE[110X, the
+        default is [9Xfalse[109X);[133X
   
   [30X    [33X[0;6Y[10XfollowRedirect[110X:  a boolean describing whether to follow redirection to
-        another URL (default [9Xtrue[109X).[133X
+        another  URL  (corresponds  to the curl option [10XCURLOPT_FOLLOWLOCATION[110X,
+        the default is [9Xtrue[109X);[133X
+  
+  [30X    [33X[0;6Y[10XfailOnError[110X:  a  boolean  describing  whether to regard 404 (and other
+        4xx)   status   codes   as  error  (corresponds  to  the  curl  option
+        [10XCURLOPT_FAILONERROR[110X, the default is [9Xfalse[109X).[133X
   
   [33X[0;0YAs  output,  this function returns a record containing some of the following
   components, which describe the outcome of the request:[133X
