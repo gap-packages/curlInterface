@@ -11,7 +11,7 @@ dnl ##
 AC_PREREQ([2.68])
 AC_INIT([curlInterface], [GAP package])
 AC_CONFIG_SRCDIR([src/curl.c])
-AC_CONFIG_HEADERS([gen/pkgconfig.h])
+AC_CONFIG_HEADERS([gen/pkgconfig.h:src/pkgconfig.h.in])
 AC_CONFIG_MACRO_DIR([m4])
 m4_include([m4/find_gap.m4])
 m4_include([m4/libcurl.m4])
