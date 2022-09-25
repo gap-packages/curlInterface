@@ -9,4 +9,8 @@ if _PATH_SO <> fail then
 fi;
 Unbind(_PATH_SO);
 
+# work around a bug in some PackageManager versions, see
+# <https://github.com/gap-packages/PackageManager/pull/100>.
+Unbind(DownloadURL);
+
 ReadPackage( "curlInterface", "gap/curl.gd");
