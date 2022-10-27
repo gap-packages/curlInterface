@@ -30,6 +30,7 @@
 /configure
 /gen/
 /Makefile
+/src/pkgconfig.h.in
 
 /tmp/
 /gh-pages/
