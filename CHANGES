@@ -1,5 +1,8 @@
 This file describes changes in the curlInterface package.
 
+2.3.2 (2023-05-19)
+  - Various janitorial changes
+
 2.3.1 (2022-09-25)
   - Fix a build issue where running `make clean` would break the build
     system (and hence building this package via GAP's BuildPackages.sh
