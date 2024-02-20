@@ -1,5 +1,6 @@
 name: curlInterface
-version: 2.3.2
+version: "2.3.2"
+license: "GPL-2.0-or-later"
 date: 2023-05-19
 description: |
     Simple Web Access
@@ -38,3 +39,27 @@ abstract: |
 status: deposited
 doc-html: doc/chap0_mj.html
 doc-pdf: doc/manual.pdf
+citeas: |
+    <p class='BibEntry'>
+    [<span class='BibKey'>JHY23</span>]   <b class='BibAuthor'>Jefferson, C., Horn, M. and Young, M.</b>,
+     <i class='BibTitle'>curlInterface, Simple Web Access,
+             Version 2.3.2</i>
+     (<span class='BibYear'>2023</span>)<br />
+    (<span class='BibNote'>GAP package</span>),
+    <span class='BibHowpublished'><a href="https://gap-packages.github.io/curlInterface/">https://gap-packages.github.io/curlInterface/</a></span>.
+    </p>
+    
+
+bibtex: |
+    @misc{ curlInterface2.3.2,
+      author =           {Jefferson, C. and Horn, M. and Young, M.},
+      title =            {{curlInterface}, Simple Web Access, {V}ersion 2.3.2},
+      month =            {May},
+      year =             {2023},
+      note =             {GAP package},
+      howpublished =     {\href  {https://gap-packages.github.io/curlInterface/}
+                          {\texttt{https://gap-packages.github.io/}\discretionary
+                          {}{}{}\texttt{curlInterface/}}},
+      printedkey =       {JHY23}
+    }
+
