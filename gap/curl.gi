@@ -9,7 +9,7 @@ function(URL, type, out_string, opts...)
 
     # Get options
     r := rec(verifyCert := true, verbose := false, followRedirect := true,
-             failOnError:= false);
+             failOnError:= false, maxTime := 0);
     if Length(opts) = 1 then
         if not IsRecord(opts[1]) then
             ErrorNoReturn("CurlRequest: <opts> must be a record");
@@ -36,12 +36,19 @@ function(URL, type, out_string, opts...)
                           " must be true or false");
         fi;
     od;
+    for rnam in ["maxTime"] do
+        if r.(rnam) <> 0 and not IsPosInt(r.(rnam)) then
+            ErrorNoReturn("CurlRequest: <opts>.", rnam,
+                          " must be a non-negative integer");
+        fi;
+    od;
 
     return CURL_REQUEST(URL, type, out_string,
                         r.verifyCert,
                         r.verbose,
                         r.followRedirect,
-                        r.failOnError);
+                        r.failOnError,
+                        r.maxTime);
 end);
 
 InstallGlobalFunction("DownloadURL",
