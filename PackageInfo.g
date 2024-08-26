@@ -104,18 +104,17 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.9",
+  GAP := ">= 4.12",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ] ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
 ),
 
 AvailabilityTest := function()
-  local dir, str;
-  dir := DirectoriesPackagePrograms("curlInterface");
-  if Filename(dir, "curl.so") = fail then
-    str := "kernel extension not compiled, package cannot be loaded";
-    LogPackageLoadingMessage(PACKAGE_WARNING, str);
+  if not IsKernelExtensionAvailable("curlinterface", "curl") then
+    LogPackageLoadingMessage(PACKAGE_WARNING,
+                            ["the kernel module is not compiled, ",
+                             "the package cannot be loaded."]);
     return fail;
   fi;
   return true;
