@@ -43,7 +43,7 @@ Obj FuncCURL_REQUEST(Obj self, Obj input_list)
     char *     typebuf = NULL;
 
     const int n = LEN_PLIST(input_list);
-    GAP_ASSERT(n == 7);    // paranoia check, GAP enforces this
+    GAP_ASSERT(n == 8);    // paranoia check, GAP enforces this
 
     Obj URL = ELM_PLIST(input_list, 1);
     if (!IS_STRING_REP(URL)) {
@@ -90,6 +90,7 @@ Obj FuncCURL_REQUEST(Obj self, Obj input_list)
         Obj verbose = ELM_PLIST(input_list, 5);
         Obj followRedirect = ELM_PLIST(input_list, 6);
         Obj failOnError = ELM_PLIST(input_list, 7);
+        Int maxTime = Int_ObjInt(ELM_PLIST(input_list, 8));
 
         if (verbose == True)
             curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
@@ -99,6 +100,9 @@ Obj FuncCURL_REQUEST(Obj self, Obj input_list)
 
         if (failOnError == True)
             curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1L);
+
+        if (maxTime != 0)
+            curl_easy_setopt(curl, CURLOPT_TIMEOUT, maxTime);
 
         if (strcmp(CONST_CSTR_STRING(type), "GET") == 0) {
             // simply download from the URL
@@ -123,7 +127,7 @@ Obj FuncCURL_REQUEST(Obj self, Obj input_list)
             typebuf = (char *) malloc(len);
             memcpy(typebuf, CONST_CSTR_STRING(type), len);
             curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, typebuf);
-        }            
+        }
 
         if (verifyCert == True) {
             //
@@ -190,8 +194,8 @@ Obj FuncCURL_VERSION(Obj self)
 
 // Table of functions to export
 static StructGVarFunc GVarFuncs[] = {
-    GVAR_FUNC(CURL_REQUEST, 7,
-              "url, type, out_string, verifyCert, verbose, followRedirect, failOnError"),
+    GVAR_FUNC(CURL_REQUEST, 8,
+              "url, type, out_string, verifyCert, verbose, followRedirect, failOnError, maxTime"),
     GVAR_FUNC(CURL_VERSION, 0, ""),
     { 0 }
 };

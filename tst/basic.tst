@@ -192,3 +192,7 @@ gap> PositionSublist(r.result, "GitHub Pages") <> fail;
 false
 gap> PositionSublist(r.result, "301 ") <> fail;
 true
+
+# Check timeout works
+gap> CurlRequest("www.google.com", "HEAD" , "", rec(maxTime := 1000000));
+rec( result := "", success := true )

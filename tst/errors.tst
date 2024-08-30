@@ -25,7 +25,7 @@ gap> CurlRequest("www.google.com", 637, "hello", rec(verifyCert := true));
 Error, CurlRequest: <type> must be a string
 
 # post_string not a string
-gap> PostToURL("httpbin.org/post", 17);                     
+gap> PostToURL("httpbin.org/post", 17);
 Error, CurlRequest: <out_string> must be a string
 
 # invalid verifyCert
@@ -52,6 +52,14 @@ Error, CurlRequest: <opts> must be a record
 gap> CurlRequest("www.google.com", "GET", "", rec(verifyCert := true), 3, true);
 Error, CurlRequest: usage: requires 3 or 4 arguments, but 6 were given
 
+# invalid time
+gap> CurlRequest("www.google.com", "GET", "", rec(maxTime := -1));
+Error, CurlRequest: <opts>.maxTime must be a non-negative integer
+
+# invalid time
+gap> CurlRequest("www.google.com", "GET", "", rec(maxTime := "abc"));
+Error, CurlRequest: <opts>.maxTime must be a non-negative integer
+
 # number of arguments
 gap> CURL_REQUEST();
-Error, Function: number of arguments must be 7 (not 0)
+Error, Function: number of arguments must be 8 (not 0)

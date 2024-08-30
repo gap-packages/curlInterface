@@ -134,6 +134,8 @@ DeclareGlobalFunction("DeleteURL");
 #!       404 (and other 4xx) status codes as error
 #!       (corresponds to the curl option <C>CURLOPT_FAILONERROR</C>,
 #!       the default is <K>false</K>).
+#!     * <C>maxTime</C>: Maximum time in seconds that you allow each transfer
+#!       to take. 0 means no limitation. (default <K>0</K>).
 #!
 #!   As output, this function returns a record containing some of the following
 #!   components, which describe the outcome of the request:
