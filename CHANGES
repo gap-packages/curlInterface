@@ -1,5 +1,10 @@
 This file describes changes in the curlInterface package.
 
+2.4.0 (2024-08-31)
+  - Require GAP >= 4.12
+  - Add 'maxTime' argument
+  - Use LoadKernelExtension
+
 2.3.2 (2023-05-19)
   - Various janitorial changes
 
