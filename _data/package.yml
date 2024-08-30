@@ -1,7 +1,7 @@
 name: curlInterface
-version: "2.3.2"
+version: "2.4.0"
 license: "GPL-2.0-or-later"
-date: 2023-05-19
+date: 2024-08-31
 description: |
     Simple Web Access
 
@@ -19,12 +19,12 @@ maintainers:
     - name: Michael Young
       url: http://mct25.host.cs.st-andrews.ac.uk/
 
-GAP: ">= 4.9"
+GAP: ">= 4.12"
 
 needed-pkgs:
     - name: "GAPDoc"
       version: ">= 1.5"
-      url: "http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc"
+      url: "https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc"
 
 www: https://gap-packages.github.io/curlInterface/
 readme: README.md
@@ -32,7 +32,7 @@ packageinfo: https://gap-packages.github.io/curlInterface/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/curlInterface/releases/download/v2.3.2/curlInterface-2.3.2.tar.gz
+      url: https://github.com/gap-packages/curlInterface/releases/download/v2.4.0/curlInterface-2.4.0.tar.gz
 
 abstract: |
 
@@ -41,25 +41,25 @@ doc-html: doc/chap0_mj.html
 doc-pdf: doc/manual.pdf
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>JHY23</span>]   <b class='BibAuthor'>Jefferson, C., Horn, M. and Young, M.</b>,
+    [<span class='BibKey'>JHY24</span>]   <b class='BibAuthor'>Jefferson, C., Horn, M. and Young, M.</b>,
      <i class='BibTitle'>curlInterface, Simple Web Access,
-             Version 2.3.2</i>
-     (<span class='BibYear'>2023</span>)<br />
+             Version 2.4.0</i>
+     (<span class='BibYear'>2024</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/curlInterface/">https://gap-packages.github.io/curlInterface/</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ curlInterface2.3.2,
+    @misc{ curlInterface,
       author =           {Jefferson, C. and Horn, M. and Young, M.},
-      title =            {{curlInterface}, Simple Web Access, {V}ersion 2.3.2},
-      month =            {May},
-      year =             {2023},
+      title =            {{curlInterface}, Simple Web Access, {V}ersion 2.4.0},
+      month =            {Aug},
+      year =             {2024},
       note =             {GAP package},
       howpublished =     {\href  {https://gap-packages.github.io/curlInterface/}
-                          {\texttt{https://gap-packages.github.io/}\discretionary
+                          {\texttt{https://gap\texttt{\symbol{45}}packages.github.io/}\discretionary
                           {}{}{}\texttt{curlInterface/}}},
-      printedkey =       {JHY23}
+      printedkey =       {JHY24}
     }
 

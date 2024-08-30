@@ -129,6 +129,9 @@
         4xx)   status   codes   as  error  (corresponds  to  the  curl  option
         [10XCURLOPT_FAILONERROR[110X, the default is [9Xfalse[109X).[133X
   
+  [30X    [33X[0;6Y[10XmaxTime[110X: Maximum time in seconds that you allow each transfer to take.
+        0 means no limitation. (default [9X0[109X).[133X
+  
   [33X[0;0YAs  output,  this function returns a record containing some of the following
   components, which describe the outcome of the request:[133X
   
