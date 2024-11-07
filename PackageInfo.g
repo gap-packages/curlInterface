@@ -113,9 +113,9 @@ Dependencies := rec(
 AvailabilityTest := function()
   if not IsKernelExtensionAvailable("curlinterface", "curl") then
     LogPackageLoadingMessage(PACKAGE_WARNING,
-                            ["the kernel module is not compiled, ",
-                             "the package cannot be loaded."]);
-    return fail;
+                             ["the kernel module is not compiled, ",
+                              "the package cannot be loaded."]);
+    return false;
   fi;
   return true;
 end,
