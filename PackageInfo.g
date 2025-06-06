@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "curlInterface",
 Subtitle := "Simple Web Access",
-Version := "2.4.0",
-Date := "31/08/2024", # dd/mm/yyyy format
+Version := "2.4.1",
+Date := "06/06/2025", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -113,9 +113,9 @@ Dependencies := rec(
 AvailabilityTest := function()
   if not IsKernelExtensionAvailable("curlinterface", "curl") then
     LogPackageLoadingMessage(PACKAGE_WARNING,
-                            ["the kernel module is not compiled, ",
-                             "the package cannot be loaded."]);
-    return fail;
+                             ["the kernel module is not compiled, ",
+                              "the package cannot be loaded."]);
+    return false;
   fi;
   return true;
 end,

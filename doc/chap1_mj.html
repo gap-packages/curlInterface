@@ -127,7 +127,7 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := PostToURL("www.httpbin.org/post", "animal=tiger");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := PostToURL("httpbun.com/post", "animal=tiger");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r.success;</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r.result{[51..100]};</span>
@@ -216,7 +216,7 @@ true
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    "",</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                    rec(verifyCert := false));</span>
 rec( result := "", success := true )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := CurlRequest("www.httpbin.org/post", "POST", "animal=tiger");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := CurlRequest("httpbun.com/post", "POST", "animal=tiger");;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r.success;</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r.result{[51..100]};</span>
