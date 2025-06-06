@@ -75,7 +75,7 @@ DeclareGlobalFunction("DownloadURL");
 #!   <Ref Func="CurlRequest"/>.
 #!
 #! @BeginExample
-#! gap> r := PostToURL("www.httpbin.org/post", "animal=tiger");;
+#! gap> r := PostToURL("httpbun.com/post", "animal=tiger");;
 #! gap> r.success;
 #! true
 #! gap> r.result{[51..100]};
@@ -160,7 +160,7 @@ DeclareGlobalFunction("DeleteURL");
 #! >                     "",
 #! >                     rec(verifyCert := false));
 #! rec( result := "", success := true )
-#! gap> r := CurlRequest("www.httpbin.org/post", "POST", "animal=tiger");;
+#! gap> r := CurlRequest("httpbun.com/post", "POST", "animal=tiger");;
 #! gap> r.success;
 #! true
 #! gap> r.result{[51..100]};

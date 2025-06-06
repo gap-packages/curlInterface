@@ -173,7 +173,7 @@ false
 gap> r := DownloadURL("httpbun.com/get", rec(verbose := true));;
 gap> r.success;
 true
-gap> PositionSublist(r.result, "httpbin") <> fail;
+gap> PositionSublist(r.result, "httpbun") <> fail;
 true
 
 #gap> PositionSublist(r.result, "404 ") <> fail;
