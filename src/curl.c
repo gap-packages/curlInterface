@@ -22,8 +22,9 @@
 #define CONST_CSTR_STRING(x) CSTR_STRING(x)
 #endif
 
-size_t write_string(void * ptr, size_t size, size_t nmemb, Obj buf)
+size_t write_string(char * ptr, size_t size, size_t nmemb, void * outstream)
 {
+    Obj buf = (Obj)outstream;
     UInt len = GET_LEN_STRING(buf);
     UInt newlen = len + size * nmemb;
     GROW_STRING(buf, newlen);
