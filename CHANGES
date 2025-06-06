@@ -1,5 +1,8 @@
 This file describes changes in the curlInterface package.
 
+2.4.1 (2025-06-06)
+  - Replace `www.httpbin.org` by `httpbun.com` to fix test suite failures
+
 2.4.0 (2024-08-31)
   - Require GAP >= 4.12
   - Add 'maxTime' argument
