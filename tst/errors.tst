@@ -25,7 +25,7 @@ gap> CurlRequest("www.google.com", 637, "hello", rec(verifyCert := true));
 Error, CurlRequest: <type> must be a string
 
 # post_string not a string
-gap> PostToURL("httpbin.org/post", 17);
+gap> PostToURL("httpbun.com/post", 17);
 Error, CurlRequest: <out_string> must be a string
 
 # invalid verifyCert
