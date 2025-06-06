@@ -163,14 +163,14 @@ gap> PositionSublist(r.result, "405 ") <> fail;
 true
 gap> PositionSublist(r.result, "tiger") <> fail;
 false
-gap> r := DeleteURL("www.httpbun.com/delete");;
+gap> r := DeleteURL("httpbun.com/delete");;
 gap> r.success;
 true
 gap> PositionSublist(r.result, "405 ") <> fail;
 false
 
 # Check verbose requests don't break anything (we can't catch the output here)
-gap> r := DownloadURL("http://www.httpbun.com/get", rec(verbose := true));;
+gap> r := DownloadURL("httpbun.com/get", rec(verbose := true));;
 gap> r.success;
 true
 gap> PositionSublist(r.result, "httpbin") <> fail;
