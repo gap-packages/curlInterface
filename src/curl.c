@@ -2,7 +2,7 @@
 // curlInterface: Simple Web Access
 //
 
-#include "compiled.h" // GAP headers
+#include "gap_all.h" // GAP headers
 
 #include <stdio.h>
 #include <stdlib.h>
