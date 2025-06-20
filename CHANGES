@@ -1,5 +1,8 @@
 This file describes changes in the curlInterface package.
 
+2.4.2 (2025-06-20)
+  - Various janitorial changes
+
 2.4.1 (2025-06-06)
   - Replace `www.httpbin.org` by `httpbun.com` to fix test suite failures
 
