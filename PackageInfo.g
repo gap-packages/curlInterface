@@ -38,6 +38,7 @@ Persons := [
     FirstNames := "Max",
     LastName := "Horn",
     WWWHome := "https://www.quendi.de/math",
+    GitHubUsername := "fingolfin",
     Email := "mhorn@rptu.de",
     PostalAddress := Concatenation(
                "Fachbereich Mathematik\n",
