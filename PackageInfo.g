@@ -110,7 +110,7 @@ Dependencies := rec(
   SuggestedOtherPackages := [ ],
   NeededSystemPackages := rec(
     Ubuntu   := [["libcurl4-gnutls-dev"]],
-    Homebrew := [["curl"]]
+    Homebrew := [["curl"]],
   ),
   ExternalConditions := [ ],
 ),
