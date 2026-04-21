@@ -1,5 +1,8 @@
 This file describes changes in the curlInterface package.
 
+2.4.3 (2026-04-22)
+  - Add `NeededSystemPackages` field to `PackageInfo.g`
+
 2.4.2 (2025-06-20)
   - Various janitorial changes
 
