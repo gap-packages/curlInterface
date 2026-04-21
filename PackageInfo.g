@@ -1,144 +1,103 @@
-#
-# curlInterface: Simple Web Access
-#
-# This file contains package meta data. For additional information on
-# the meaning and correct usage of these fields, please consult the
-# manual of the "Example" package as well as the comments in its
-# PackageInfo.g file.
-#
+#############################################################################
+##  
+##  Demo PackageInfo.g for the GitHubPagesForGAP
+##
+
 SetPackageInfo( rec(
 
-PackageName := "curlInterface",
-Subtitle := "Simple Web Access",
-Version := "2.4.2",
-Date := "20/06/2025", # dd/mm/yyyy format
-License := "GPL-2.0-or-later",
+PackageName := "GitHubPagesForGAP",
+
+Subtitle := "A GitHub Pages generator for GAP packages",
+Version := "0.4",
+Date := "10/04/2025", # dd/mm/yyyy format
+License := "0BSD",
 
 Persons := [
   rec(
-    IsAuthor := true,
-    IsMaintainer := true,
-    FirstNames := "Christopher",
-    LastName := "Jefferson",
-    WWWHome := "http://caj.host.cs.st-andrews.ac.uk/",
-    Email := "caj21@st-andrews.ac.uk",
+    LastName      := "Horn",
+    FirstNames    := "Max",
+    IsAuthor      := true,
+    IsMaintainer  := true,
+    Email         := "mhorn@rptu.de",
+    WWWHome       := "https://www.quendi.de/math",
+    GitHubUsername:= "fingolfin",
     PostalAddress := Concatenation(
-               "School of Computer Science\n",
-               "University of St Andrews\n",
-               "Jack Cole Building, North Haugh\n",
-               "St Andrews, Fife, KY16 9SX\n",
-               "United Kingdom" ),
-    Place := "St Andrews",
-    Institution := "University of St Andrews",
+                       "Fachbereich Mathematik\n",
+                       "RPTU Kaiserslautern-Landau\n",
+                       "Gottlieb-Daimler-Straße 48\n",
+                       "67663 Kaiserslautern\n",
+                       "Germany" ),
+    Place         := "Kaiserslautern, Germany",
+    Institution   := "RPTU Kaiserslautern-Landau"
   ),
 
   rec(
-    IsAuthor := false,
-    IsMaintainer := true,
-    FirstNames := "Max",
-    LastName := "Horn",
-    WWWHome := "https://www.quendi.de/math",
-    Email := "mhorn@rptu.de",
-    PostalAddress := Concatenation(
-               "Fachbereich Mathematik\n",
-               "RPTU Kaiserslautern-Landau\n",
-               "Gottlieb-Daimler-Straße 48\n",
-               "67663 Kaiserslautern\n",
-               "Germany" ),
-    Place := "Kaiserslautern, Germany",
-    Institution := "RPTU Kaiserslautern-Landau"
+    LastName      := "Thor",
+    FirstNames    := "A. U.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    #Email         := "author@example.com",
   ),
 
   rec(
-    IsAuthor := true,
-    IsMaintainer := true,
-    FirstNames := "Michael",
-    LastName := "Young",
-    WWWHome := "http://mct25.host.cs.st-andrews.ac.uk/",
-    Email := "mct25@st-andrews.ac.uk",
-    PostalAddress := Concatenation(
-               "School of Computer Science\n",
-               "University of St Andrews\n",
-               "Jack Cole Building, North Haugh\n",
-               "St Andrews, Fife, KY16 9SX\n",
-               "United Kingdom" ),
-    Place := "St Andrews",
-    Institution := "University of St Andrews",
+    LastName      := "Itor",
+    FirstNames    := "Jan",
+    IsAuthor      := false,
+    IsMaintainer  := true,
+    #Email         := "janitor@example.com",
   ),
 ],
 
-SourceRepository := rec(
-    Type := "git",
-    URL := Concatenation( "https://github.com/gap-packages/", ~.PackageName ),
-),
-IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-#SupportEmail   := "TODO",
-PackageWWWHome  := "https://gap-packages.github.io/curlInterface/",
-PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
-ArchiveURL      := Concatenation( ~.SourceRepository.URL,
-                                 "/releases/download/v", ~.Version,
-                                 "/", ~.PackageName, "-", ~.Version ),
+Status := "other",
 
-ArchiveFormats := ".tar.gz",
+# The following are not strictly necessary in your own PackageInfo.g
+# (in the sense that update.g only looks at the usual fields
+# like PackageWWWHome, ArchiveURL etc.). But they are convenient
+# if you use exactly the scheme for your package website that we propose.
+GithubUser := "gap-system",
+GithubRepository := ~.PackageName,
+GithubWWW := Concatenation("https://github.com/", ~.GithubUser, "/", ~.GithubRepository),
 
-##  Status information. Currently the following cases are recognized:
-##    "accepted"      for successfully refereed packages
-##    "submitted"     for packages submitted for the refereeing
-##    "deposited"     for packages for which the GAP developers agreed
-##                    to distribute them with the core GAP system
-##    "dev"           for development versions of packages
-##    "other"         for all other packages
-##
-Status := "deposited",
+PackageWWWHome := Concatenation("https://", ~.GithubUser, ".github.io/", ~.GithubRepository, "/"),
+README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
+PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+# The following assumes you are using the Github releases system. If not, adjust
+# it accordingly.
+ArchiveURL     := Concatenation(~.GithubWWW,
+                    "/releases/download/v", ~.Version, "/",
+                    ~.GithubRepository, "-", ~.Version),
 
-AbstractHTML   :=  "",
+ArchiveFormats := ".tar.gz .tar.bz2",
+
+AbstractHTML := 
+  "This is a pseudo package that contains no actual\
+  <span class=\"pkgname\">GAP</span> code. Instead, it is a template for other\
+  GAP packages that allows to quickly setup GitHub Pages.",
 
 PackageDoc := rec(
-  BookName  := "curl",
+  BookName  := "GitHubPagesForGAP",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0_mj.html",
+  HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Simple Web Access",
+  LongTitle := "A GitHub Pages generator for GAP packages",
 ),
 
+# The following dependencies are fake and for testing / demo purposes
 Dependencies := rec(
-  GAP := ">= 4.12",
-  NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ] ],
-  SuggestedOtherPackages := [ ],
-  ExternalConditions := [ ],
+  GAP := ">=4.8.1",
+  NeededOtherPackages := [
+    ["GAPDoc", ">= 1.2"],
+    ["IO", ">= 4.1"],
+  ],
+  SuggestedOtherPackages := [["orb", ">= 4.2"]],
+  ExternalConditions := []
 ),
 
-AvailabilityTest := function()
-  if not IsKernelExtensionAvailable("curlinterface", "curl") then
-    LogPackageLoadingMessage(PACKAGE_WARNING,
-                             ["the kernel module is not compiled, ",
-                              "the package cannot be loaded."]);
-    return false;
-  fi;
-  return true;
-end,
+AvailabilityTest := ReturnTrue,
 
-# Show the libcurl version number in the banner string.
-# (We assume that this function gets called *after* the package has been
-# loaded, in particular after libcurl has been loaded.)
-BannerFunction := function( info )
-  local str, version;
-
-  str := DefaultPackageBannerString( info );
-  if not IsBoundGlobal( "CURL_VERSION" ) then
-    return str;
-  fi;
-  version := ValueGlobal( "CURL_VERSION" )();
-
-  return ReplacedString( str, "by Christopher",
-             Concatenation( "Using ", version, "\n", "by Christopher" ) );
-end,
-
-
-TestFile := "tst/testall.g",
-
-#Keywords := [ "TODO" ],
+Keywords := ["GitHub Pages", "GAP"]
 
 ));
+
+
