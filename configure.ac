@@ -30,7 +30,27 @@ FIND_GAP
 dnl ##
 dnl ## Check for libcurl
 dnl ##
-LIBCURL_CHECK_CONFIG([yes],[],[],[AC_MSG_ERROR([libcurl development files required])])
+libcurl_default=yes
+
+dnl ## on macOS with Homebrew, check if it has libcurl installed and if so,
+dnl ## prefer that over the ancient version bundled with macOS
+AS_IF([test "x`uname -s 2>/dev/null`" = xDarwin], [
+  AS_IF([command -v brew >/dev/null 2>&1], [
+    libcurl_homebrew_prefix=`brew --prefix curl 2>/dev/null`
+    AS_IF([test -x "$libcurl_homebrew_prefix/bin/curl-config"], [
+      libcurl_default=$libcurl_homebrew_prefix
+    ])
+  ])
+])
+
+LIBCURL_CHECK_CONFIG([$libcurl_default],[],[
+  AS_IF([test "x$libcurl_default" != xyes &&
+         test -z "$with_libcurl"], [
+    AC_MSG_NOTICE([using Homebrew libcurl from $libcurl_default])
+  ])
+],[
+  AC_MSG_ERROR([libcurl development files required])
+])
 
 dnl ##
 dnl ## Output everything
