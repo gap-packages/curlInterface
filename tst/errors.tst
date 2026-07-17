@@ -21,43 +21,44 @@ gap> PostToURL(42, "hello");
 Error, CurlRequest: <URL> must be a string
 
 # request type not a string
-gap> CurlRequest("www.google.com", 637, "hello", rec(verifyCert := true));
+gap> CurlRequest("http://127.0.0.1/", 637, "hello", rec(verifyCert := true));
 Error, CurlRequest: <type> must be a string
 
 # post_string not a string
-gap> PostToURL("httpbun.com/post", 17);
+gap> PostToURL("http://127.0.0.1/", 17);
 Error, CurlRequest: <out_string> must be a string
 
 # invalid verifyCert
-gap> DownloadURL("https://www.google.com", rec(verifyCert := "maybe"));
+gap> DownloadURL("http://127.0.0.1/", rec(verifyCert := "maybe"));
 Error, CurlRequest: <opts>.verifyCert must be true or false
 
 # invalid verbose
-gap> DownloadURL("https://www.google.com", rec(verbose := "yes"));
+gap> DownloadURL("http://127.0.0.1/", rec(verbose := "yes"));
 Error, CurlRequest: <opts>.verbose must be true or false
 
 # invalid followRedirect
-gap> DownloadURL("https://www.google.com", rec(followRedirect := "always"));
+gap> DownloadURL("http://127.0.0.1/", rec(followRedirect := "always"));
 Error, CurlRequest: <opts>.followRedirect must be true or false
 
 # invalid failOnError
-gap> DownloadURL("https://www.google.com", rec(failOnError := "yes"));
+gap> DownloadURL("http://127.0.0.1/", rec(failOnError := "yes"));
 Error, CurlRequest: <opts>.failOnError must be true or false
 
 # invalid opts
-gap> DownloadURL("https://www.google.com", "please verify the cert");
+gap> DownloadURL("http://127.0.0.1/", "please verify the cert");
 Error, CurlRequest: <opts> must be a record
 
 # too many arguments
-gap> CurlRequest("www.google.com", "GET", "", rec(verifyCert := true), 3, true);
+gap> CurlRequest("http://127.0.0.1/", "GET", "",
+>                rec(verifyCert := true), 3, true);
 Error, CurlRequest: usage: requires 3 or 4 arguments, but 6 were given
 
 # invalid time
-gap> CurlRequest("www.google.com", "GET", "", rec(maxTime := -1));
+gap> CurlRequest("http://127.0.0.1/", "GET", "", rec(maxTime := -1));
 Error, CurlRequest: <opts>.maxTime must be a non-negative integer
 
 # invalid time
-gap> CurlRequest("www.google.com", "GET", "", rec(maxTime := "abc"));
+gap> CurlRequest("http://127.0.0.1/", "GET", "", rec(maxTime := "abc"));
 Error, CurlRequest: <opts>.maxTime must be a non-negative integer
 
 # number of arguments
