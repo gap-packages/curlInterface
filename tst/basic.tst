@@ -68,7 +68,7 @@ gap> PositionSublist(r.error, "404") <> fail;
 true
 
 # Check successful POST requests
-gap> r := PostToURL("httpbun.com/post", "field1=true&field2=17");;
+gap> r := PostToURL("https://httpbin.org/post", "field1=true&field2=17");;
 gap> SortedList(RecNames(r));
 [ "result", "success" ]
 gap> r.success;
@@ -81,7 +81,7 @@ gap> PositionSublist(r.result, "field3") <> fail;
 false
 
 # Check POST on a string with null characters
-gap> r := PostToURL("httpbun.com/post", "field1=my\000first\000field");;
+gap> r := PostToURL("https://httpbin.org/post", "field1=my\000first\000field");;
 gap> SortedList(RecNames(r));
 [ "result", "success" ]
 gap> r.success;
@@ -127,7 +127,7 @@ true
 gap> post_string := List("animal=tiger&material=cotton", letter -> letter);;
 gap> IsStringRep(post_string);
 false
-gap> r := PostToURL("httpbun.com/post", post_string, rec(verifyCert := true));;
+gap> r := PostToURL("https://httpbin.org/post", post_string, rec(verifyCert := true));;
 gap> r.success;
 true
 gap> PositionSublist(r.result, "\"animal\": \"tiger\"") <> fail;
@@ -163,17 +163,17 @@ gap> PositionSublist(r.result, "405 ") <> fail;
 true
 gap> PositionSublist(r.result, "tiger") <> fail;
 false
-gap> r := DeleteURL("httpbun.com/delete");;
+gap> r := DeleteURL("https://httpbin.org/delete");;
 gap> r.success;
 true
 gap> PositionSublist(r.result, "405 ") <> fail;
 false
 
 # Check verbose requests don't break anything (we can't catch the output here)
-gap> r := DownloadURL("httpbun.com/get", rec(verbose := true));;
+gap> r := DownloadURL("https://httpbin.org/get", rec(verbose := true));;
 gap> r.success;
 true
-gap> PositionSublist(r.result, "httpbun") <> fail;
+gap> PositionSublist(r.result, "httpbin") <> fail;
 true
 
 #gap> PositionSublist(r.result, "404 ") <> fail;

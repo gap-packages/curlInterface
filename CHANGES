@@ -1,5 +1,8 @@
 This file describes changes in the curlInterface package.
 
+Next
+  - Switch tests and examples from httpbun.com to httpbin.org
+
 2.4.4 (2026-07-13)
   - Remove dependency on GAPDoc
 
