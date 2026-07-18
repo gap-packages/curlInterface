@@ -108,6 +108,7 @@ Dependencies := rec(
   GAP := ">= 4.12",
   NeededOtherPackages := [ ],
   SuggestedOtherPackages := [ ],
+  TestPackages := [ [ "io", ">= 4.7.0" ] ],
   NeededSystemPackages := rec(
     Ubuntu   := [["libcurl4-gnutls-dev"]],
     Homebrew := [["curl"]],

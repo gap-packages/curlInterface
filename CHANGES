@@ -1,5 +1,8 @@
 This file describes changes in the curlInterface package.
 
+Next
+  - Make HTTP tests hermetic with a local IO-backed server
+
 2.4.4 (2026-07-13)
   - Remove dependency on GAPDoc
 
