@@ -1,5 +1,9 @@
 This file describes changes in the curlInterface package.
 
+Next
+  - Fix inverted `verifyCert` check which disabled TLS certificate
+    verification by default
+
 2.4.4 (2026-07-19)
   - Remove dependency on GAPDoc
   - Prefer a Homebrew libcurl installation on macOS when available
