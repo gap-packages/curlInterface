@@ -130,7 +130,7 @@ Obj FuncCURL_REQUEST(Obj self, Obj input_list)
             curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, typebuf);
         }
 
-        if (verifyCert == True) {
+        if (verifyCert == False) {
             //
             // If you want to connect to a site who isn't using a certificate
             // that is signed by one of the certs in the CA bundle you have,
