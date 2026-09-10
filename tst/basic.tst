@@ -1,4 +1,4 @@
-#@local r, url, postString, requestType, server, baseurl
+#@local r, url, postString, requestType, server, baseurl, file
 gap> LoadPackage( "curlInterface", false );
 true
 gap> LoadPackage( "io", false );
@@ -110,4 +110,72 @@ gap> DownloadURL( url, rec( maxTime := 1 ) ).success;
 false
 gap> DownloadURL( url, rec( maxTime := 5 ) ).result;
 "download test response\n"
+
+# Downloading to a file
+gap> file := Filename( DirectoryTemporary(), "target" );;
+gap> r := DownloadURL( Concatenation( baseurl, "/success" ),
+>                      rec( targetFile := file ) );;
+gap> r.success;
+true
+
+# with a target file there is no body to hand back
+gap> RecNames( r );
+[ "success" ]
+gap> StringFile( file );
+"download test response\n"
+
+# a failed request must not leave the file behind
+gap> RemoveFile( file );;
+gap> r := DownloadURL( Concatenation( baseurl, "/missing" ),
+>                      rec( targetFile := file, failOnError := true ) );;
+gap> r.success;
+false
+gap> IsExistingFile( file );
+false
+
+# nor after the connection drops mid-transfer
+gap> r := DownloadURL( Concatenation( baseurl, "/disconnect" ),
+>                      rec( targetFile := file ) );;
+gap> r.success;
+false
+gap> IsExistingFile( file );
+false
+
+# an existing file survives a failed download, contents and all
+gap> FileString( file, "do not touch\n" );;
+gap> r := DownloadURL( Concatenation( baseurl, "/missing" ),
+>                      rec( targetFile := file, failOnError := true ) );;
+gap> r.success;
+false
+gap> StringFile( file );
+"do not touch\n"
+
+# and likewise when the connection drops mid-transfer
+gap> r := DownloadURL( Concatenation( baseurl, "/disconnect" ),
+>                      rec( targetFile := file ) );;
+gap> r.success;
+false
+gap> StringFile( file );
+"do not touch\n"
+
+# a successful download replaces it
+gap> r := DownloadURL( Concatenation( baseurl, "/success" ),
+>                      rec( targetFile := file ) );;
+gap> r.success;
+true
+gap> StringFile( file );
+"download test response\n"
+gap> RemoveFile( file );;
+
+# a target file that cannot be opened is reported, not fatal
+gap> r := DownloadURL( Concatenation( baseurl, "/success" ),
+>                      rec( targetFile := "/no/such/directory/target" ) );;
+gap> r.success;
+false
+gap> r.error;
+"cannot open target file"
+
+# argument checking
+gap> DownloadURL( baseurl, rec( targetFile := 42 ) );
+Error, CurlRequest: <opts>.targetFile must be a string or false
 gap> CURLINTERFACE_StopHTTPTestServer( server );;

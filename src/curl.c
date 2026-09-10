@@ -6,6 +6,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include <curl/curl.h>
 
 #undef PACKAGE
@@ -33,6 +36,29 @@ size_t write_string(char * ptr, size_t size, size_t nmemb, void * outstream)
     return size * nmemb;
 }
 
+// Write straight to a file, for CURLOPT_WRITEDATA when a target is given.
+size_t write_file(char * ptr, size_t size, size_t nmemb, void * outstream)
+{
+    return fwrite(ptr, size, nmemb, (FILE *)outstream);
+}
+
+// room for the ".<pid>.part" that names the temporary file
+#define TARGET_TEMP_SUFFIX_LEN 32
+
+// Could a completed download be moved onto <path>?  A directory cannot be
+// replaced by a file, and an existing file we may not write should not be
+// replaced either, even though 'rename' would happily do it.  Saying so here
+// costs a 'stat' and saves downloading a body that has nowhere to go.
+static int can_replace_file(const char * path)
+{
+    struct stat st;
+
+    if (stat(path, &st) != 0)
+        return 1;    // nothing there yet; opening the temporary file decides
+
+    return S_ISDIR(st.st_mode) ? 0 : access(path, W_OK) == 0;
+}
+
 Obj FuncCURL_REQUEST(Obj self, Obj input_list)
 {
     CURL *     curl;
@@ -42,9 +68,12 @@ Obj FuncCURL_REQUEST(Obj self, Obj input_list)
     curl_off_t len;
     char       urlbuf[4096] = { 0 };
     char *     typebuf = NULL;
+    char *     targetbuf = NULL;
+    char *     tempbuf = NULL;
+    FILE *     targetfile = NULL;
 
     const int n = LEN_PLIST(input_list);
-    GAP_ASSERT(n == 8);    // paranoia check, GAP enforces this
+    GAP_ASSERT(n == 9);    // paranoia check, GAP enforces this
 
     Obj URL = ELM_PLIST(input_list, 1);
     if (!IS_STRING_REP(URL)) {
@@ -70,6 +99,42 @@ Obj FuncCURL_REQUEST(Obj self, Obj input_list)
     }
     memcpy(urlbuf, CONST_CSTR_STRING(URL), len);
 
+    // If a target file was given, write the body straight into it instead of
+    // building it up in memory.  Copy the name out of the GAP string for the
+    // same reason as the URL above.
+    Obj target = ELM_PLIST(input_list, 9);
+    if (target != False) {
+        if (!IS_STRING_REP(target)) {
+            target = CopyToStringRep(target);
+        }
+        len = GET_LEN_STRING(target) + 1;
+        targetbuf = (char *)malloc(len);
+        memcpy(targetbuf, CONST_CSTR_STRING(target), len);
+
+        // Write to a temporary file beside the target and rename it into
+        // place once the transfer succeeded, so that a failure leaves
+        // whatever was at the target alone instead of truncating it.  The
+        // pid keeps two GAP processes fetching the same target apart.
+        tempbuf = (char *)malloc(len + TARGET_TEMP_SUFFIX_LEN);
+        snprintf(tempbuf, len + TARGET_TEMP_SUFFIX_LEN, "%s.%ld.part",
+                 targetbuf, (long)getpid());
+
+        if (can_replace_file(targetbuf))
+            targetfile = fopen(tempbuf, "wb");
+        if (targetfile == NULL) {
+            Obj prec = NEW_PREC(2);
+            SET_LEN_PREC(prec, 2);
+            SET_RNAM_PREC(prec, 1, RNamName("success"));
+            SET_ELM_PREC(prec, 1, False);
+            SET_RNAM_PREC(prec, 2, RNamName("error"));
+            SET_ELM_PREC(prec, 2, MakeImmString("cannot open target file"));
+            CHANGED_BAG(prec);
+            free(tempbuf);
+            free(targetbuf);
+            return prec;
+        }
+    }
+
     res = curl_global_init(CURL_GLOBAL_DEFAULT);
     if (res != 0) {
         ErrorMayQuit("CURL_REQUEST: failed to initialize libcurl (error %d)",
@@ -82,8 +147,14 @@ Obj FuncCURL_REQUEST(Obj self, Obj input_list)
         curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errbuf);
 
         curl_easy_setopt(curl, CURLOPT_URL, urlbuf);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_string);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, in_string);
+        if (targetfile != NULL) {
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_file);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, targetfile);
+        }
+        else {
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_string);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, in_string);
+        }
         curl_easy_setopt(curl, CURLOPT_TCP_NODELAY, 1L);
         curl_easy_setopt(curl, CURLOPT_USERAGENT, "curlInterface/GAP package");
 
@@ -171,6 +242,19 @@ Obj FuncCURL_REQUEST(Obj self, Obj input_list)
     curl_global_cleanup();
     free(typebuf);
 
+    if (targetfile != NULL) {
+        if (fclose(targetfile) != 0 && errorstring == 0)
+            errorstring = MakeImmString("cannot write target file");
+        if (errorstring == 0 && rename(tempbuf, targetbuf) != 0)
+            errorstring = MakeImmString("cannot write target file");
+        if (errorstring)
+            remove(tempbuf);
+        free(tempbuf);
+        free(targetbuf);
+    }
+
+    // With a target file there is no body to hand back, so the result record
+    // has just 'success', or 'success' and 'error'.
     Obj prec = NEW_PREC(2);
     SET_LEN_PREC(prec, 2);
     SET_RNAM_PREC(prec, 1, RNamName("success"));
@@ -178,6 +262,10 @@ Obj FuncCURL_REQUEST(Obj self, Obj input_list)
         SET_ELM_PREC(prec, 1, False);
         SET_RNAM_PREC(prec, 2, RNamName("error"));
         SET_ELM_PREC(prec, 2, errorstring);
+    }
+    else if (targetfile != NULL) {
+        SET_LEN_PREC(prec, 1);
+        SET_ELM_PREC(prec, 1, True);
     }
     else {
         SET_ELM_PREC(prec, 1, True);
@@ -195,8 +283,8 @@ Obj FuncCURL_VERSION(Obj self)
 
 // Table of functions to export
 static StructGVarFunc GVarFuncs[] = {
-    GVAR_FUNC(CURL_REQUEST, 8,
-              "url, type, out_string, verifyCert, verbose, followRedirect, failOnError, maxTime"),
+    GVAR_FUNC(CURL_REQUEST, 9,
+              "url, type, out_string, verifyCert, verbose, followRedirect, failOnError, maxTime, targetFile"),
     GVAR_FUNC(CURL_VERSION, 0, ""),
     { 0 }
 };

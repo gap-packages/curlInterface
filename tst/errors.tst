@@ -63,4 +63,4 @@ Error, CurlRequest: <opts>.maxTime must be a non-negative integer
 
 # number of arguments
 gap> CURL_REQUEST();
-Error, Function: number of arguments must be 8 (not 0)
+Error, Function: number of arguments must be 9 (not 0)

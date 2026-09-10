@@ -136,13 +136,29 @@ DeclareGlobalFunction("DeleteURL");
 #!       the default is <K>false</K>).
 #!     * <C>maxTime</C>: Maximum time in seconds that you allow each transfer
 #!       to take. 0 means no limitation. (default <K>0</K>).
+#!     * <C>targetFile</C>: the name of a file to write the body of the response
+#!       to, as a string, or <K>false</K> to have it returned as a string
+#!       (the default).  The data is written as it arrives, so the size of
+#!       the response is not limited by the available memory.
+#!       <P/>
+#!       The body first goes to a temporary file next to
+#!       <C>targetFile</C>, which is renamed into place once the transfer
+#!       has succeeded.  A failed request thus leaves an existing file at
+#!       <C>targetFile</C> untouched, and never leaves a partial one behind.
+#!       A file that cannot be replaced, such as a directory or a file
+#!       without write permission, is reported before the transfer starts.
+#!       <P/>
+#!       Beware that with the default <C>failOnError := false</C> a 404
+#!       response counts as success, and its empty body then replaces the
+#!       contents of <C>targetFile</C>.  Pass <C>failOnError := true</C>
+#!       when writing to a file, unless error pages are wanted.
 #!
 #!   As output, this function returns a record containing some of the following
 #!   components, which describe the outcome of the request:
 #!     * <C>success</C>: a boolean describing whether the request was
 #!       successfully received by the server;
 #!     * <C>result</C>: body of the information sent by the server (only if
-#!       <C>success = true</C>);
+#!       <C>success = true</C> and no <C>targetFile</C> was given);
 #!     * <C>error</C>: human-readable string saying what went wrong (only if
 #!       <C>success = false</C>).
 #!
