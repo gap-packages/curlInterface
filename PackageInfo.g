@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "curlInterface",
 Subtitle := "Simple Web Access",
-Version := "2.4.4",
-Date := "19/07/2026", # dd/mm/yyyy format
+Version := "2.5.0",
+Date := "10/09/2026", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
